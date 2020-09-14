@@ -9,18 +9,25 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Pray for Sunrise</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <!-- <script src="https://kit.fontawesome.com/a076d05399"></script> -->
 </head>
 
 <body>
   <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper">
-        <ul>
-          <li>
-            <a href="/" class="left brand-logo">&nbsp;&nbsp;Pray for Sunrise</a>
-          </li>
-        </ul>
-      </div>
+      <!-- <input type="checkbox" id="check">
+      <label for="check">
+        <i class="fas fa-bars"></i>
+      </label> -->
+      <label class="logo">Pray for Sunrise</label>
+      <ul>
+        <li>
+          <a href="#">Sign up</a>
+        </li>
+        <li>
+          <a href="#">Login</a>
+        </li>
+      </ul>
     </nav>
   </header>
   <main class="container">{% block content %} {% endblock %}</main>
