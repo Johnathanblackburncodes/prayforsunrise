@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Card(models.Model):
-    #ImageURL - Made into a seperate class
+     #ImageURL - Made into a seperate class
     avatar = models.FOREIGNKEY(Avatar, on_delete=models.CASCADE)
 
 
@@ -71,7 +71,9 @@ class Avatar(models.Model):
      user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-    return f"Photo for card_id: {self.user} @{self.url}"
+        return f"Photo for card_id: {self.user} @{self.url}"
+
+
 
 # image for the card
 class Image(models.Model): 
@@ -82,5 +84,5 @@ class Image(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
 
     def __str__(self):
-     return f"Photo for card_id: {self.card} @{self.url}"
+        return f"Photo for card_id: {self.card} @{self.url}"
 
