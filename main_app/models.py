@@ -4,8 +4,10 @@ from django.db import models
 
 
 class Card(models.Model):
-     #ImageURL - Made into a seperate class
-    avatar = models.FOREIGNKEY(Avatar, on_delete=models.CASCADE)
+    #ImageURL - Made into a seperate class/changed to inclass
+    # avatar = models.FOREIGNKEY(Avatar, on_delete=models.CASCADE)
+
+    img-url = models.CharField(max_length=200)
 
 
     #CharacterName
@@ -20,7 +22,7 @@ class Card(models.Model):
 class Game(models.Model):
     #Host - many-to-one / many(games) can have the same one (host)
 
-    host = models.FOREIGNKEY(User, on_delete=models.CASCADE)
+    
     host = models.FOREIGNKEY(User, on_delete=models.CASCADE)
     card = models.FOREIGNKEY(Card, on_delete=models.CASCADE)
 
@@ -29,7 +31,7 @@ class Game(models.Model):
 
 
     #Round - functionality needed to make rounds count += / however there is only one round in ONUW? Or are we wanting more rounds?/functional
-    # round = models.IntegerField()
+    round = models.IntegerField()
 
 class Profile(models.Model):
     #AvatarURL - move to seperate class 
@@ -54,6 +56,7 @@ class Profile(models.Model):
 class User(models.Model):
     username = models.CharField(max_length=20)
     image = models.ForeignKey(Avatar, on_delete=models.CASCADE)
+    image-url = models.CharField(max_length=200)
 
     def __str__(self):
         return self.username
@@ -63,26 +66,26 @@ class User(models.Model):
 #should images be seperate for the user?/below
 
 #User avatar
-class Avatar(models.Model):
-    #URL
-     url = models.CharField(max_length=200)
+# class Avatar(models.Model):
+#     #URL
+#      url = models.CharField(max_length=200)
 
-     #user associated
-     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#      #user associated
+#      user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"Photo for card_id: {self.user} @{self.url}"
+#     def __str__(self):
+#         return f"Photo for card_id: {self.user} @{self.url}"
 
 
 
-# image for the card
-class Image(models.Model): 
-    #URL
-    url = models.CharField(max_length=200)
+# # image for the card
+# class Image(models.Model): 
+#     #URL
+#     url = models.CharField(max_length=200)
 
-    #card associated
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+#     #card associated
+#     card = models.ForeignKey(Card, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"Photo for card_id: {self.card} @{self.url}"
+#     def __str__(self):
+#         return f"Photo for card_id: {self.card} @{self.url}"
 
