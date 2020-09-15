@@ -3,8 +3,14 @@
 {% block content %}
 <section class="hero">
   <h1>Pray for Sunrise</h1>
-  <a href="#" class="btn">Login</a>
-  <!-- <a href="#" class="btn">Sign up</a> -->
+  <ul class="btn-wrap">
+    {% if user.is_authenticated %}
+    <li><a class="btn" href="{% url 'logout' %}">Log Out</a></li>
+    {% else %}
+    <li><a class="btn" href="{% url 'signup' %}">Sign Up</a></li>
+    <li><a class="btn" href="{% url 'login' %}">Log In</a></li>
+    {% endif %}
+  </ul>
 </section>
 
 {% endblock %}

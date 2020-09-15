@@ -135,6 +135,19 @@ h1 {
   border: 1px solid rgba(255, 255, 255, .2);
 }
 
+.btn:hover {
+  background: rgb(159, 128, 80);
+  transition: .5s;
+  mix-blend-mode: color-burn;
+}
+
+.btn-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 32%;
+  padding: 20px 0;
+}
+
 /* Mobile Styling */
 @media screen and (min-width: 950px) {
 }
