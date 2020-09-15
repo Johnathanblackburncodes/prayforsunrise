@@ -21,12 +21,12 @@
       </label> -->
       <label class="logo">Pray for Sunrise</label>
       <ul>
-        <li>
-          <a href="#">Sign up</a>
-        </li>
-        <li>
-          <a href="#">Login</a>
-        </li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
+        {% else %}
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        <li><a href="{% url 'login' %}">Log In</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>
