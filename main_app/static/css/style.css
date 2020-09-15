@@ -2,9 +2,13 @@
 
 body {
   display: flex;
-  font-family: Helvetica, sans-serif;
+  font-family: 'Oswald', sans-serif;
   min-height: 100vh;
   flex-direction: column;
+  background-image: url(https://images.unsplash.com/photo-1529891134002-0558c8e20909?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 * {
@@ -27,20 +31,28 @@ footer {
   text-align: right;
 }
 
+/* Fonts  */
+
+
 /* Nav  */
 
 nav {
-  background: grey;
+  /* background: rgb(77, 91, 87); */
   height: 80px;
   width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
 }
 
-label.logo{
-  color: white;
+.logo{
+  /* color: #D1001c; */
+  color: #DFDFDF;
+  /* background: rgb(159, 128, 80); */
+  font-family: 'Metal Mania', cursive;
   font-size: 35px;
   line-height: 80px;
-  padding: 0 100px;
+  padding: 0px 70px;
   font-weight: 700;
+  margin-left: 50px;
 }
 
 nav ul {
@@ -55,16 +67,27 @@ nav ul li {
 }
 
 nav ul li a {
-  color: white;
+  color: #DFDFDF;
   font-size: 17px;
   padding: 7px 13px;
   border-radius:  3px;
   text-transform: uppercase;
+  border-left: 1px solid rgba(255, 255, 255, .2);
 }
 
 a.active,a:hover {
-  background: rosybrown;
+  background: rgb(159, 128, 80);
   transition: .5s;
+}
+
+/* Home  */
+h1 {
+  /* color: #DFDFDF; */
+  color: #D1001c;
+  mix-blend-mode: color-burn;
+  text-transform: uppercase;
+  font-size: 73px;
+  font-family: 'Metal Mania', cursive;
 }
 
 /* Footer */
@@ -72,7 +95,46 @@ a.active,a:hover {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background: grey;
+  color: rgb(159, 128, 80);
+  border-top: 1px solid rgba(255, 255, 255, .2);
   height: 80px;
   width: 100%;
+  /* mix-blend-mode: color-dodge; */
+}
+
+/* Sections */
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Buttons */
+.btn {
+  color: #DFDFDF;
+  font-size: 17px;
+  padding: 7px 13px;
+  border-radius:  3px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, .2);
+}
+
+/* Mobile Styling */
+@media screen and (min-width: 950px) {
 }
