@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'main_app',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -72,6 +73,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'prayforsunrise.wsgi.application'
 
+#Channels
+ASGI_APPLICATION = 'prayforsunrise.routing.application'
+
+#Redis
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
