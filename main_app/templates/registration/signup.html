@@ -3,11 +3,12 @@
 
 <h1>Sign Up</h1>
 
-<form method="post" action="{% url 'login' %}">
+{% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
+
+<form method="post" action="{% url 'signup' %}">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" class="btn" value="login">
-  <input type="hidden" name="next" value="{{ next }}">
+  <input type="submit" class="btn" value="signup">
 </form>
 
 {% endblock %}
