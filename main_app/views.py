@@ -8,6 +8,11 @@ from django.contrib.auth.forms import UserCreationForm
 def home(request):
     return render(request, 'home.html')
 
+def room(request, room_name):
+    return render(request, 'game/room.html', {
+        'room_name': room_name
+    })
+
 
 def signup(request):
     error_message = ''
