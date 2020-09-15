@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Pray for Sunrise</h1>
 <section class="hero">
   <h1>Pray for Sunrise</h1>
   <a href="#" class="btn">Login</a>
@@ -9,6 +8,8 @@
 </section>
 
 {% if user.is_authenticated %}
+
+<div>
 What chat room would you like to enter?<br>
 <input id="room-name-input" type="text" size="100"><br>
 <input id="room-name-submit" type="button" value="Enter">
@@ -26,6 +27,7 @@ What chat room would you like to enter?<br>
         window.location.pathname = '/' + roomName + '/';
     };
 </script>
+</div>
 {% endif %}
 
 {% endblock %}

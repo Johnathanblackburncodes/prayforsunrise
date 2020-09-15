@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'prayforsunrise.wsgi.application'
 #Channels
 ASGI_APPLICATION = 'prayforsunrise.routing.application'
 
-#Redis Server
+#Redis
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
