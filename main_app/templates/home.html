@@ -3,37 +3,35 @@
 {% block content %}
 <section class="hero">
   <h1>Pray for Sunrise</h1>
+  {% if user.is_authenticated %}
+  <div>
+    What chat room would you like to enter?<br>
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Enter">
+  </div>
+  {% else %}
   <ul class="btn-wrap">
-    {% if user.is_authenticated %}
-    <li><a class="btn" href="{% url 'logout' %}">Log Out</a></li>
-    {% else %}
     <li><a class="btn" href="{% url 'signup' %}">Sign Up</a></li>
     <li><a class="btn" href="{% url 'login' %}">Log In</a></li>
-    {% endif %}
   </ul>
+  {% endif %}
 </section>
 
 {% if user.is_authenticated %}
 
-<div>
-What chat room would you like to enter?<br>
-<input id="room-name-input" type="text" size="100"><br>
-<input id="room-name-submit" type="button" value="Enter">
-
 <script>
-    document.querySelector('#room-name-input').focus();
-    document.querySelector('#room-name-input').onkeyup = function(e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#room-name-submit').click();
-        }
-    };
+  document.querySelector('#room-name-input').focus();
+  document.querySelector('#room-name-input').onkeyup = function (e) {
+    if (e.keyCode === 13) {  // enter, return
+      document.querySelector('#room-name-submit').click();
+    }
+  };
 
-    document.querySelector('#room-name-submit').onclick = function(e) {
-        var roomName = document.querySelector('#room-name-input').value;
-        window.location.pathname = '/' + roomName + '/';
-    };
+  document.querySelector('#room-name-submit').onclick = function (e) {
+    var roomName = document.querySelector('#room-name-input').value;
+    window.location.pathname = '/' + roomName + '/';
+  };
 </script>
-</div>
 {% endif %}
 
 {% endblock %}
