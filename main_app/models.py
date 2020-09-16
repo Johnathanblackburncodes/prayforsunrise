@@ -33,9 +33,8 @@ STATUS = (
 )
 
 class Card(models.Model):
-    #ImageURL - Made into a seperate class/changed to inclass
+    # ImageURL - Made into a seperate class/changed to inclass
     # avatar = models.FOREIGNKEY(Avatar, on_delete=models.CASCADE)
-
     imgurl = models.CharField(max_length=200)
 
 
@@ -131,10 +130,3 @@ class Profile(models.Model):
 
     #link our profile to a user
     puser = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
-
-
-
-
-
