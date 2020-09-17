@@ -92,7 +92,7 @@ class Hand(models.Model):
     # Every Hand belongs to a user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-        status = models.CharField(
+    status = models.CharField(
         # We're going to set the player status to an ENUM 
         max_length=1,
         choices=STATUS,
