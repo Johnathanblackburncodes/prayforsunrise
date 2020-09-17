@@ -5,3 +5,8 @@ class GameForm(ModelForm):
     class Meta:
         model = Game
         fields = ['room']
+
+class SetupGameForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = ['room']
