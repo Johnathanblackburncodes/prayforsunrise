@@ -7,13 +7,13 @@
 
   <div>
     <form action="{% url 'add_game' %}" method="post">
-        {% csrf_token %}
-        {{  game_form.as_p }}
-        <input type="text" name="room" id="id_room">
-        <input type="submit" value="Add Game" class="btn">
+      {% csrf_token %}
+      {{  game_form.as_p }}
+      <input type="text" name="room" id="id_room">
+      <input type="submit" value="Add Game" class="btn">
     </form>
   </div>
-  
+
   <div>
     <h3>Which chat room would you like to enter?</h3><br>
     <div class="room-btn">
