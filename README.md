@@ -72,5 +72,7 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 
 
 ## Biggest Challenges
+- Workflow 
+
 
 ## Future Improvements
