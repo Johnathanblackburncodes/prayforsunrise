@@ -102,7 +102,8 @@ class Hand(models.Model):
 
 
 class Profile(models.Model):
-    #AvatarURL - move to seperate class 
+    #AvatarURL 
+    # url = model.CharField(max_length=100)
     #Charfield change to url string
     image = models.CharField(max_length=200) #slightly edited due to AWS instructions SVL
 

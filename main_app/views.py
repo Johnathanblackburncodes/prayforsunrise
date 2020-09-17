@@ -20,6 +20,10 @@ def room(request, room_name):
         'room_name': room_name
     })
 
+#added to create a place for photos and bios to live. 
+def profile(request, room_name):
+    return render(request, 'profile.html')
+
 
 def signup(request):
     error_message = ''
@@ -40,17 +44,17 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
-def add_photo(request, profile_id):
+def add_photo(request, user_id):
     photo_file = request.FILES.get('photo-file', NONE)
 
-    if profile_file:
+    if photo_file:
         s3 = boto3.client('s3')
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
 
         try:
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            photo = Photo(url=url, profile_id=profile_id)
+            photo = Profile(image=url, puser=user_id)
             photo.save()
         except:
             print('Oops, something went wrong. Please try again.')
