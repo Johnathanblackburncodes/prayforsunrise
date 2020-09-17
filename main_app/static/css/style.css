@@ -125,6 +125,71 @@ h1 {
   justify-content: center;
 }
 
+.game {
+  display: flex;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 0;
+}
+
+/* Cards  */
+.card-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.card:nth-child(3) {
+  margin-right: 0;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+.card {
+  float: left;
+  position: relative;
+  width: calc(100% * .3333 - 30px + .3333 * 30px);
+  height: 269px;
+  margin: 0 15px 15px 0;
+  perspective: 1000;
+  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* @mixin easeOut {
+  transition: all .6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card__flipper {
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
+
+.card__back, .card__front {
+  position: absolute;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 340px;
+}
+
+.card__front {
+  transform: rotateY(0);
+  z-index: 2;
+  overflow: hidden;
+} */
+
 /* Buttons */
 .btn {
   color: #DFDFDF;

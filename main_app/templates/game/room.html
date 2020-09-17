@@ -2,47 +2,181 @@
 
 {% block content %}
 
-<section class="chat">
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        //Q&D, update with security
-        const chatName = '{{ user.username }}'
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
+<section class="game">
+    <ul class="card-list">
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Werewolf</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Werewolf</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Seer</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Werewolf</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Werewolf</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Troublemaker</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Villager</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>Villager</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="chat">
+        <textarea id="chat-log" cols="50" rows="20"></textarea><br>
+        <input id="chat-message-input" type="text" size="50"><br>
+        <input id="chat-message-submit" type="button" value="Send">
+        {{ room_name|json_script:"room-name" }}
+    </div>
+</section>
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+<script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        document.querySelector('#chat-log').value += (data.message + '\n');
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
+    var Flipper = (function () {
+        var card = $('.card');
+        var flipper = card.find('.card__flipper');
+        var win = $(window);
+
+        var flip = function () {
+            var thisCard = $(this);
+            var thisFlipper = thisCard.find('.card__flipper');
+            var offset = thisCard.offset();
+            var xc = win.width() / 2;
+            var yc = win.height() / 2;
+            var docScroll = $(document).scrollTop();
+            var cardW = thisCard.outerWidth() / 2;
+            var cardH = thisCard.height() / 2;
+
+            var transX = xc - offset.left - cardW;
+            var transY = docScroll + yc - offset.top - cardH;
+            //     if (offset.top > card.height()) transY = docScroll - offset.top + cardH;
+            if (win.width() <= 700) transY = 0;
+
+            if (card.hasClass('active')) unflip();
+
+            thisCard.css({ 'z-index': '3' }).addClass('active');
+
+            thisFlipper.css({
+                'transform': 'translate3d(' + transX + 'px,' + transY + 'px, 0) rotateY(180deg) scale(1)',
+                '-webkit-transform': 'translate3d(' + transX + 'px,' + transY + 'px, 0) rotateY(180deg) scale(1)',
+                '-ms-transform': 'translate3d(' + transX + 'px,' + transY + 'px, 0) rotateY(180deg) scale(1)'
+            }).addClass('active');
+
+            return false;
         };
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
+        var unflip = function (e) {
+            card.css({ 'z-index': '1' }).removeClass('active');
+            flipper.css({
+                'transform': 'none',
+                '-webkit-transform': 'none',
+                '-ms-transform': 'none'
+            }).removeClass('active');
         };
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
+        var bindActions = function () {
+            card.on('click', flip);
+            win.on('click', unflip);
+        }
+
+        var init = function () {
+            bindActions();
         };
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = `${chatName}:${messageInputDom.value}`;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
+        return {
+            init: init
         };
-    </script>
-</body>
-</html>
+
+    }());
+
+    Flipper.init();
+</script>
+{% endblock %}
