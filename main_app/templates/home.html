@@ -7,20 +7,23 @@
 
   <div>
     <form action="{% url 'add_game' %}" method="post">
-        {% csrf_token %}
-        {{  game_form.as_p }}
-        <input type="text" name="room" id="id_room">
-        <input type="submit" value="Add Game" class="btn">
+      {% csrf_token %}
+      {{  game_form.as_p }}
+      <input type="text" name="room" id="id_room">
+      <input type="submit" value="Add Game" class="btn">
     </form>
   </div>
-  
+
   <div>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
     <input id="room-name-submit" type="button" value="Enter">
     <!-- Test below SVL -->
     <li><a class="btn" href="{% url 'profile' %}">Log In</a></li>
     <!-- Test above SVL -->
+    <h3>Which chat room would you like to enter?</h3><br>
+    <div class="room-btn">
+      <input id="room-name-input" type="text"><br>
+      <input id="room-name-submit" type="button" value="Enter">
+    </div>
   </div>
   {% else %}
   <ul class="btn-wrap">

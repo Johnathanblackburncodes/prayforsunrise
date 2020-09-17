@@ -31,6 +31,11 @@ footer {
   text-align: right;
 }
 
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 /* Fonts  */
 
 
@@ -50,9 +55,8 @@ nav {
   font-family: 'Metal Mania', cursive;
   font-size: 35px;
   line-height: 80px;
-  padding: 0px 70px;
+  padding: 0px 7rem;
   font-weight: 700;
-  margin-left: 50px;
 }
 
 nav ul {
@@ -86,8 +90,31 @@ h1 {
   color: #D1001c;
   mix-blend-mode: color-burn;
   text-transform: uppercase;
-  font-size: 73px;
+  font-size: 7.3rem;
   font-family: 'Metal Mania', cursive;
+}
+
+h3 {
+  color: #DFDFDF;
+  font-size: 25px;
+}
+
+input {
+  background-color: #DFDFDF;
+  outline: none;
+  font-size: 1.5rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+textarea {
+  background-color: #DFDFDF;
+  outline: none;
+  resize: none;
+  border: 4px solid rgb(159, 128, 80);
+  height: 600px;
+  width: 100%;
+  font-size: 18px;
+  font-family: 'Oswald', sans-serif;
 }
 
 /* Footer */
@@ -96,7 +123,6 @@ h1 {
   align-items: center;
   justify-content: flex-end;
   color: rgb(159, 128, 80);
-  border-top: 1px solid rgba(255, 255, 255, .2);
   height: 80px;
   width: 100%;
   /* mix-blend-mode: color-dodge; */
@@ -132,39 +158,7 @@ h1 {
   padding: 100px 0;
 }
 
-/* Cards  */
-.card-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 15px;
-  text-align: center;
-  overflow-x: hidden;
-}
 
-.card:nth-child(3) {
-  margin-right: 0;
-}
-
-.card:last-child {
-  margin-right: 0;
-}
-
-.card {
-  float: left;
-  position: relative;
-  width: calc(100% * .3333 - 30px + .3333 * 30px);
-  height: 269px;
-  margin: 0 15px 15px 0;
-  perspective: 1000;
-  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
 
 /* @mixin easeOut {
   transition: all .6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -190,6 +184,9 @@ h1 {
   overflow: hidden;
 } */
 
+/* Layout  */
+
+
 /* Buttons */
 .btn {
   color: #DFDFDF;
@@ -203,7 +200,6 @@ h1 {
 .btn:hover {
   background: rgb(159, 128, 80);
   transition: .5s;
-  mix-blend-mode: color-burn;
 }
 
 .btn-wrap {
@@ -213,6 +209,162 @@ h1 {
   padding: 20px 0;
 }
 
-/* Mobile Styling */
-@media screen and (min-width: 950px) {
+.room-btn {
+  display: flex;
+  border: 4px solid rgb(159, 128, 80);
 }
+
+#room-name-input {
+  flex-grow: 1;
+}
+
+input[type=button] {
+  background-color: rgb(159, 128, 80);
+  border: none;
+  color: white;
+  padding: 3px 32px;
+  text-decoration: none;
+  margin: 0px 0px;
+  cursor: pointer;
+  border: 1px solid white;
+}
+
+/* Mobile Styling */
+@media screen and (max-width: 950px) {
+  .logo {
+    padding: 0;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .btn-wrap {
+    width: 100%;
+  }
+  .right-nav {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+  .game {
+    flex-direction: column;
+    padding: 20px 0;
+  }
+}
+
+/* .show-btn{
+  background: #fff;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #3498db;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+.show-btn, .container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="checkbox"]{
+  display: none;
+}
+.container{
+  display: none;
+  background: #fff;
+  width: 410px;
+  padding: 30px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+#show:checked ~ .container{
+  display: block;
+}
+.container .close-btn{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.container .close-btn:hover{
+  color: #3498db;
+}
+.container .text{
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+}
+.container form{
+  margin-top: -20px;
+}
+.container form .data{
+  height: 45px;
+  width: 100%;
+  margin: 40px 0;
+}
+form .data label{
+  font-size: 18px;
+}
+form .data input{
+  height: 100%;
+  width: 100%;
+  padding-left: 10px;
+  font-size: 17px;
+  border: 1px solid silver;
+}
+form .data input:focus{
+  border-color: #3498db;
+  border-bottom-width: 2px;
+}
+form .forgot-pass{
+  margin-top: -8px;
+}
+form .forgot-pass a{
+  color: #3498db;
+  text-decoration: none;
+}
+form .forgot-pass a:hover{
+  text-decoration: underline;
+}
+form .btn{
+  margin: 30px 0;
+  height: 45px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+form .btn .inner{
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  z-index: -1;
+  background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+  transition: all 0.4s;
+}
+form .btn:hover .inner{
+  left: 0;
+}
+form .btn button{
+  height: 100%;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+form .signup-link{
+  text-align: center;
+}
+form .signup-link a{
+  color: #3498db;
+  text-decoration: none;
+}
+form .signup-link a:hover{
+  text-decoration: underline;
+} */
