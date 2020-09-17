@@ -78,7 +78,7 @@ class Game(models.Model):
     stage = models.CharField(
         # We're going to set the rounds to an ENUM for now
         # hard coding the night roles ATM but should probably
-        # find a move flexible solution
+        # find a more flexible solution
         max_length=2,
         choices=STAGES,
         # We want to make sure we always default to Setup
@@ -89,12 +89,9 @@ class Game(models.Model):
 class Hand(models.Model):
     #Every hand will need to belong to a Game and assign a player a card
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Every Hand belongs to a user
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-
-class GameConditions(models.Model):
-    #Every GC needs to be assigned to a Game
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
     status = models.CharField(
         # We're going to set the player status to an ENUM 
         max_length=1,
@@ -102,10 +99,6 @@ class GameConditions(models.Model):
         # We want to make sure we always default to Setup
         default=[0][0]
     )
-    #make sure we have a card to reference roles
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
 
 
 class Profile(models.Model):
