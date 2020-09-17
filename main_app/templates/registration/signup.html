@@ -10,6 +10,9 @@
   <form method="post" action="{% url 'signup' %}">
     {% csrf_token %}
     {{ form.as_p }}
+    <!-- SVL: Adding in the Bio Section -->
+    <input type="text" name="bio" value="Your Gamer Bio Here">
+    <br>
     <input type="submit" class="btn" value="signup">
   </form>
 </section>
