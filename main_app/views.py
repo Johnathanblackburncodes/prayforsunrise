@@ -9,6 +9,12 @@ from .models import Profile #added for AWS pic SVL
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'prayforsunrise'
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from .forms import GameForm
+from .models import Game, Hand
+
 # Create your views here.
 
 
@@ -16,6 +22,13 @@ def home(request):
     return render(request, 'home.html')
 
 def room(request, room_name):
+    # try:
+    game = Game.objects.get(room=room_name)
+    room_user = User.objects.get(pk=request.user.id)
+    game.user.add(room_user)
+    # except:
+    #     print(game)
+    #     return redirect('/')
     return render(request, 'game/room.html', {
         'room_name': room_name
     })
@@ -24,6 +37,26 @@ def room(request, room_name):
 def profile(request, room_name):
     return render(request, 'profile.html')
 
+
+def add_game(request ):
+  form = GameForm(request.POST)
+  # validate the form
+  new_room = ''
+  if form.is_valid():
+    # don't save the form to the db until it
+    # has the host_id assigned
+    new_game = form.save(commit=False)
+    try:
+        new_game.room = uuid.uuid4().hex[:4]
+        new_game.host_id = request.user.id
+        new_game.save()
+        new_room = 'rooms/' + new_game.room
+    except:
+        print('An Error has occured generating your room')
+    
+  else:
+      print(f'{form}')
+  return redirect(new_room)
 
 def signup(request):
     error_message = ''
