@@ -15,8 +15,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('add_game', views.add_game, name='add_game'),
     path('accounts/signup/', views.signup, name='signup'),
-    path('profilepic/<user_id>/add_photo/', views.add_photo, name='add_photo'), #added for AWS profiles, referencing profile class SVL
-    path('profile/<user_id>', views.profile, name='profile'), #where the profile shall live SVL
+    path('profile/<int:user_id>/add_photo/', views.add_photo, name='add_photo'), #added for AWS profiles, referencing profile class SVL
+    path('profile/<int:user_id>/', views.profile, name='profile'), #where the profile shall live SVL
     path('rooms/<str:room_name>/', views.room, name='room'), #from changes in merge
 ]
 

@@ -107,6 +107,8 @@ class Profile(models.Model):
     #Charfield change to url string
     image = models.CharField(max_length=200) #slightly edited due to AWS instructions SVL
 
+    
+
     #Bio
     bio = models.CharField(max_length=20)
 

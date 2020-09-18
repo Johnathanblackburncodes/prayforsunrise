@@ -3,17 +3,18 @@
 {% block content %}
 
 <h1>{{ User.username }}</h1>
+{% if profile %}
 <p>{{ profile.bio }}</p>
 
-{% if profile.is_active %}
+<!-- {% if profile.is_active %}
 <p>Active</p>
 {% else %}
 <p>Not Active</p>
-{% endif %}
+{% endif %} -->
 
-{% if profile.is_superuser %}
+<!-- {% if profile.is_superuser %}
 <p>Admin</p>
-{% endif %}
+{% endif %} -->
 
 {% if profile.image %}
 <img src="{{ profile.image }}">
@@ -26,10 +27,8 @@
     <input type="submit" value="Upload Photo">
 </form>
 {% endif %}
-
-
-
-
-
+{% else %}
+<p>No profile</p>
+{% endif %}
 
 {% endblock %}

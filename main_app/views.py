@@ -33,11 +33,15 @@ def room(request, room_name):
     })
 
 #added to create a place for photos and bios to live. 
-def profile(request, room_name):
-    return render(request, 'profile.html')
+def profile(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+    print('this is PROFILE', profile)
+    return render(request, 'profile.html', {
+        'profile': profile
+    })
 
 
-def add_game(request ):
+def add_game(request):
   form = GameForm(request.POST)
   # validate the form
   new_room = ''
@@ -90,4 +94,4 @@ def add_photo(request, user_id):
             photo.save()
         except:
             print('Oops, something went wrong. Please try again.')
-    return redirect ('registration/signup.html')
+    return render('profile/<int:user_id>/', user_id=user_id )
