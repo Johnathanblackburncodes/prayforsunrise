@@ -18,6 +18,7 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     path('profilepic/<user_id>/add_photo/', views.add_photo, name='add_photo'), #added for AWS profiles, referencing profile class SVL
     path('profile/<user_id>', views.profile, name='profile'), #where the profile shall live SVL
+    path('profile/', views.profile, name='profile'), #where the profile shall live SVL
     path('rooms/<str:room_name>/', views.room, name='room'),
 ]
 

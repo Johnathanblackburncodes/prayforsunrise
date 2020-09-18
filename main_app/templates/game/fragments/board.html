@@ -1,4 +1,4 @@
-<div class="board">
+<div class="board" ic-sse-src="/room{{game.room}}">
     <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}}</h2>
     <h2> The Game Hand {{ hands }}</h2>
     {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands %}

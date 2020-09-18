@@ -1,25 +1,25 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+#parse out our templates for api calls 
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+#add our SSE command
+from django_eventstream import send_event
+
 import uuid, random
 import boto3 #added for AWS pic SVL
-from .models import Profile #added for AWS pic SVL
+
+#import our own forms and models
+from .forms import GameForm, SetupGameForm
+from .models import Profile, Game, Card, Hand, STAGES
 
 #Needed for AWS SVL
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'prayforsunrise'
-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-
-#Nparse out our templates for api calls 
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-
-#import our own forms and models
-from .forms import GameForm, SetupGameForm
-from .models import Game, Card, Hand, STAGES
 
 #need a list of keys from our stages tuple since we're only matching the first item, not the entire tuple
 V_STAGES = [t[0] for t in STAGES if t[0]]
@@ -45,7 +45,7 @@ def room(request, room_name):
     })
 
 #added to create a place for photos and bios to live. 
-def profile(request, room_name):
+def profile(request):
     return render(request, 'profile.html')
 
 
@@ -60,6 +60,7 @@ def add_game(request ):
     try:
         new_game.room = uuid.uuid4().hex[:4]
         new_game.host_id = request.user.id
+        new_game.stage = STAGES[0][0]
         new_game.save()
         new_room = 'rooms/' + new_game.room
     except:
@@ -93,12 +94,9 @@ def setup_game( request ):
     start_game.save()
     return redirect('rooms/' + update_game.room)
 
-
-
-
+def push_next_stage(request, room_name):
+    game = Game.objects.get(room=update_game.room)
     
-    
-        
 
 
 def signup(request):
