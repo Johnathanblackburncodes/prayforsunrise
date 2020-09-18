@@ -2,10 +2,25 @@
 
 {% block content %}
 
+{% ifequal user game.host %}
+{% ifequal game.stage '1' %}
+<div>
+    <form action="{% url 'setup_game' %}" method="post">
+        {% csrf_token %}
+        {{  setup_game.as_p }}
+        <input type="hidden" name="room" value="{{ room_name }}">
+        <input type="submit" value="Start Game" class="btn">
+    </form>
+</div>
+{% endifequal %}
+{% endifequal %}
 
 
 <section class="game">
-    {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
+    <div ic-sse-src="/events/{{game.room}}" >
+        {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
+    </div>
+        
     <div class="chat">
         <textarea hintText="Enter a message." id="chat-log"></textarea><br>
         <div class="room-btn">
