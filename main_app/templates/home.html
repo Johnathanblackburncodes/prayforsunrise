@@ -6,10 +6,10 @@
   {% if user.is_authenticated %}
 
   <div>
-    <form action="{% url 'add_game' room_name %}" method="post">
+    <form action="{% url 'add_game' %}" method="post">
         {% csrf_token %}
         {{  game_form.as_p }}
-        <input type="text" name="room" id="id_room">
+        <input type="hidden" name="room" id="id_room" value="newroom">
         <input type="submit" value="Add Game" class="btn">
     </form>
   </div>
@@ -17,7 +17,7 @@
   <div>
     <input id="room-name-submit" type="button" value="Enter">
     <!-- Test below SVL -->
-    <li><a class="btn" href="{% url 'profile' %}">Log In</a></li>
+    <li><a class="btn" href="{% url 'profile' %}">Profile</a></li>
     <!-- Test above SVL -->
     <h3>Which chat room would you like to enter?</h3><br>
     <div class="room-btn">
