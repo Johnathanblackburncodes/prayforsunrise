@@ -1,0 +1,24 @@
+
+
+<div class="board">
+    <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}}</h2>
+    <h2> The Game Hand {{ hands }}</h2>
+    {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands %}
+    
+    
+    <ul class="card-list">
+        {% for hand in hands %}
+            <li class="card">
+                <div class="card__flipper">
+                    <div class="card__front">
+                        <p class="card__name"><span>{{ hand.user }}</span></p>
+                        <p><span>{{ hand.card }}</span></p>
+                    </div>
+                    <div class="card__back">
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+       
+    </ul>
+</div>
