@@ -48,6 +48,7 @@ def room(request, room_name):
 def profile(request):
     return render(request, 'profile.html')
 
+### GAME FUNCTIONS
 
 def add_game(request ):
   form = GameForm(request.POST)
@@ -92,12 +93,24 @@ def setup_game( request ):
         new_hand.save()
     start_game.stage = STAGES[index_of_stage+1][0]
     start_game.save()
+    #let the player's browsers update to the new cards
+    print(f'send an SSE to {update_game.room}')
+    send_event(update_game.room, 'board-updated', {'text': 'board_updated'})
     return redirect('rooms/' + update_game.room)
 
 def push_next_stage(request, room_name):
     game = Game.objects.get(room=update_game.room)
-    
+    index_of_stage = V_STAGES.index(start_game.stage)
+    game.stage = STAGES[index_of_stage+1][0]
 
+def generate_board(request, room_name):
+    game = Game.objects.get(room=room_name)
+    print(f'This is our Game{game}, this is our room_name{room_name}')
+    hands = Hand.objects.filter(game=game)
+    return HttpResponse(render_to_string("game/fragments/board.html", {"room_name":room_name, "hands":hands, "game":game, "request":request}))
+
+
+### OTHER PAGES    
 
 def signup(request):
     error_message = ''

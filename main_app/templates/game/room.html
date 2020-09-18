@@ -5,7 +5,10 @@
 
 
 <section class="game">
-    {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
+    <div ic-sse-src="/events/{{game.room}}" >
+        {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
+    </div>
+        
     <div class="chat">
         <textarea hintText="Enter a message." id="chat-log"></textarea><br>
         <div class="room-btn">
