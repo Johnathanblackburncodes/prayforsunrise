@@ -12,9 +12,16 @@ BUCKET = 'prayforsunrise'
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+
+#Nparse out our templates for api calls 
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+#import our own forms and models
 from .forms import GameForm, SetupGameForm
 from .models import Game, Card, Hand, STAGES
 
+#need a list of keys from our stages tuple since we're only matching the first item, not the entire tuple
 V_STAGES = [t[0] for t in STAGES if t[0]]
 # Create your views here.
 
@@ -30,9 +37,11 @@ def room(request, room_name):
     except:
         print(game)
         return redirect('/')
+    hands = Hand.objects.filter(game=game)
     return render(request, 'game/room.html', {
         'room_name': room_name,
-        'game': game
+        'game': game,
+        'hands': hands
     })
 
 #added to create a place for photos and bios to live. 

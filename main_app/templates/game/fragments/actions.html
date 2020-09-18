@@ -1,0 +1,14 @@
+
+<h3>I see user: {{ user }} and I see game: {{ game }} <br> do I see a hand {{ hand }}</h3>
+{% if user == game.host %}
+    {% if game.stage == '1' %}
+    <div>
+        <form action="{% url 'setup_game' %}" method="post">
+            {% csrf_token %}
+            {{  setup_game.as_p }}
+            <input type="hidden" name="room" value="{{ room_name }}">
+            <input type="submit" value="Start Game" class="btn">
+        </form>
+    </div>
+    {% endif %}
+{% endif %}
