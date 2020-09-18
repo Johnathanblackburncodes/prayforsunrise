@@ -13,15 +13,14 @@ from . import views
 #testing USER case
 urlpatterns = [
     path('', views.home, name='home'),
-    path('add_game', views.add_game, name='add_game'),
+    path('add_game/', views.add_game, name='add_game'),
     path('setup_game', views.setup_game, name='setup_game'),
     path('events/<str:room_name>/', views.generate_board, name='generate_board'),
     path('game/<str:room_name>/', views.generate_board, name='generate_board'),
     path('accounts/signup/', views.signup, name='signup'),
-    path('profilepic/<user_id>/add_photo/', views.add_photo, name='add_photo'), #added for AWS profiles, referencing profile class SVL
-    path('profile/<user_id>', views.profile, name='profile'), #where the profile shall live SVL
-    path('profile/', views.profile, name='profile'), #where the profile shall live SVL
-    path('rooms/<str:room_name>/', views.room, name='room'),
+    path('profilepic/<int:user_id>/add_photo/', views.add_photo, name='add_photo'), #added for AWS profiles, referencing profile class SVL
+    path('profile/<int:user_id>/', views.profile, name='profile'), #where the profile shall live SVL
+    path('rooms/<str:room_name>/', views.room, name='room'), #from changes in merge
 ]
 
 #With profile now created we will need to either redirect user to the profile upon signup and/or have a button on the navbar for user. I advocate for both.

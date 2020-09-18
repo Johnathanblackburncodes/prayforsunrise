@@ -2,6 +2,18 @@
 
 {% block content %}
 
+{% ifequal user game.host %}
+{% ifequal game.stage '1' %}
+<div>
+    <form action="{% url 'setup_game' %}" method="post">
+        {% csrf_token %}
+        {{  setup_game.as_p }}
+        <input type="hidden" name="room" value="{{ room_name }}">
+        <input type="submit" value="Start Game" class="btn">
+    </form>
+</div>
+{% endifequal %}
+{% endifequal %}
 
 
 <section class="game">
