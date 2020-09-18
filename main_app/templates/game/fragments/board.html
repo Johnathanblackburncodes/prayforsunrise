@@ -10,13 +10,12 @@
             <div class="card__flipper">
                 <div class="card__front">
                     <p class="card__name"><span>{{ hand.user }}</span></p>
-                    <p><span>{{ hand.card }}</span></p>
                 </div>
-                <div class="card__back">
+                <div style="background-image: url('{{ hand.card.imgurl }}')" class="card__back">
+                    <p><span>{{ hand.card }}</span></p>
                 </div>
             </div>
         </li>
         {% endfor %}
-
     </ul>
 </div>
