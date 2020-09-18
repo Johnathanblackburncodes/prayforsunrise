@@ -368,3 +368,85 @@ form .signup-link a{
 form .signup-link a:hover{
   text-decoration: underline;
 } */
+
+
+.menuWrap {
+  background-color: rgb(159, 128, 80);
+  width: 100%;
+  height: 3rem;
+}
+
+#mblIcon {
+  cursor: pointer;
+  height: 1.5rem;
+  width: 2rem;
+  position: fixed;
+  right: .75rem;
+  top: .75rem;	
+  /* &:hover {
+    #hamb, #hamb:before, #hamb:after {
+      background:$aqua;
+    }
+  } */
+}
+#hamb {
+  background: grey;
+  width: 1.8rem;
+  height:3px;
+  float:right;
+  transition:(all .2s ease-in-out);
+  border-radius:(2px);	
+}
+
+#hamb:before {
+  content:"";
+  background:grey;
+  width: 1.8rem;
+  height:3px;
+  margin-top:.45rem;
+  float:right;
+  transition: (all .2s ease-in-out);
+  border-radius: (2px);		
+}
+#hamb:after {
+  content:"";
+  background: grey;
+  width: 1.8rem;
+  height:3px;
+  margin-top:.3rem;
+  float: right;
+  right:.75rem;
+  transition: (all .2s ease-in-out);
+  border-radius: (2px);	
+}
+#hamb.active {
+  background: rgb(159, 128, 80);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  margin-top: .4rem;
+}
+#hamb.active:before {
+  background: rgb(159, 128, 80);
+  margin-top:0;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+#hamb.active:after {
+  background: aqua;
+  margin-top: -.2rem;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  opacity:0;
+}
+#mobile {
+  display:none;
+}
+#mobile a {
+  opacity: 0;
+}
+#mobile a.vis {
+  opacity: 1;
+}
