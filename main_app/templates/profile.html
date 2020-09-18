@@ -2,33 +2,17 @@
 
 {% block content %}
 
-<h1>{{ User.username }}</h1>
-{% if profile %}
+<h1>{{ profile.username }}</h1>
+<br><br>
 <p>{{ profile.bio }}</p>
-
-<!-- {% if profile.is_active %}
-<p>Active</p>
-{% else %}
-<p>Not Active</p>
-{% endif %} -->
-
-<!-- {% if profile.is_superuser %}
-<p>Admin</p>
-{% endif %} -->
-
-{% if profile.image %}
-<img src="{{ profile.image }}">
-{% else %}
-<div>No Profile Pic</div>
+<br><br>
+<img alt="Profile Image" src="{{ profile.image.url }}">
+<br><br>
 <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <input type="file" name="photo-file">
     <br><br>
     <input type="submit" value="Upload Photo">
 </form>
-{% endif %}
-{% else %}
-<p>No profile</p>
-{% endif %}
 
 {% endblock %}
