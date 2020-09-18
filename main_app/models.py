@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 STAGES = (
-    ('1', 'SETUP'),
+    ('1', 'SETUP', ),
     ('2', 'See Cards'),
-    ('3', 'Villager'),
-    ('4', 'Night Werewolf'),
-    ('5', 'Night Seer'),
-    ('6', 'Night Robber'),
+    ('3', 'Night'),
+    ('4', 'Werewolf'),
+    ('5', 'Seer'),
+    ('6', 'Robber'),
     ('7', 'Troublemaker'),
-    ('8', 'Night Drunk'),
+    ('8', 'Drunk'),
+    ('9', 'Day'),
     ('99', 'Complete')
 )
 

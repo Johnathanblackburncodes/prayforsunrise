@@ -15,83 +15,9 @@
 {% endifequal %}
 {% endifequal %}
 
-<h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}}</h2>
 
 <section class="game">
-    <ul class="card-list">
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Werewolf</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Werewolf</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Seer</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Werewolf</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Werewolf</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Troublemaker</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Villager</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>Villager</span></p>
-                </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
-    </ul>
+    {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
     <div class="chat">
         <textarea hintText="Enter a message." id="chat-log"></textarea><br>
         <div class="room-btn">
@@ -115,6 +41,7 @@
         + '/'
     );
 
+
     chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
         document.querySelector('#chat-log').value += (data.message + '\n');
@@ -123,6 +50,7 @@
     chatSocket.onclose = function (e) {
         console.error('Chat socket closed unexpectedly');
     };
+
 
     document.querySelector('#chat-message-input').focus();
     document.querySelector('#chat-message-input').onkeyup = function (e) {
