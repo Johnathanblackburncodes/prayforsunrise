@@ -2,17 +2,21 @@
 
 {% block content %}
 
-<h1>{{ profile.username }}</h1>
-<br><br>
-<p>{{ profile.bio }}</p>
-<br><br>
-<img alt="Profile Image" src="{{ profile.image.url }}">
-<br><br>
-<form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST">
-    {% csrf_token %}
-    <input type="file" name="photo-file">
+<div>
+    <h1>{{ user.username }}</h1>
     <br><br>
-    <input type="submit" value="Upload Photo">
-</form>
+    <p>{{ profile.bio }}</p>
+    <br><br>
+    <h1>Photo:</h1>
+    <p>{{ profile.image }}</p>
+    <img alt="Profile Image" src="{{ profile.image }}">
+    <br><br>
+    <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" value="Upload Photo">
+    </form>
+</div>
 
 {% endblock %}

@@ -137,7 +137,7 @@ def signup(request):
 
 
 def add_photo(request, user_id):
-    photo_file = request.FILES.get('photo-file', NONE)
+    photo_file = request.FILES.get('photo-file', None)
 
     if photo_file:
         s3 = boto3.client('s3')
@@ -150,4 +150,6 @@ def add_photo(request, user_id):
             photo.save()
         except:
             print('Oops, something went wrong. Please try again.')
-        return render('profile/<int:user_id>/', user_id=user_id )
+        return render('profile/<int:user_id>/', user_id) #changed user_id=user_id changed 'profile/<int:user_id>/' to 'profile
+
+
