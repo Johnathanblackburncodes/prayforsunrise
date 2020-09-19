@@ -67,7 +67,7 @@ def add_game(request):
         new_game.host_id = request.user.id
         new_game.stage = STAGES[0][0]
         new_game.save()
-        new_room = 'rooms/' + new_game.room
+        new_room = '/rooms/' + new_game.room
     except:
         print('An Error has occured generating your room')
     
@@ -99,7 +99,8 @@ def setup_game( request ):
     start_game.save()
     #let the player's browsers update to the new cards
     print(f'send an SSE to {update_game.room}')
-    send_event(update_game.room, 'board-updated', {'text': 'board_updated'})
+    send_event('gameroom', 'board-updated', {'text': 'board-updated'})
+    #FIX: using a static room for SSE while we finish the game
     return redirect('rooms/' + update_game.room)
 
 def push_next_stage(request, room_name):

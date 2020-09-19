@@ -1,3 +1,5 @@
+
+<!-- For now we're just using a static SSE endpoint to keep things moving. replace /game/gameroom when channels is resolved-->
 <div class="board" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:board-updated">
     <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}}</h2>
     <h2> The Game Hand {{ hands }}</h2>
