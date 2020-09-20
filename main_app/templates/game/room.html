@@ -18,7 +18,7 @@
 
 <section class="game">
     <div ic-sse-src="/events/gameroom" >
-        {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
+        {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
     </div>
         
     <div class="chat">
