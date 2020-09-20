@@ -43,3 +43,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': message
         }))
+
+    # Send a message to room group
+    async def room_brodcast(self, message):
+        await self.send(text_data=json.dumps({
+            'message': message
+        }))

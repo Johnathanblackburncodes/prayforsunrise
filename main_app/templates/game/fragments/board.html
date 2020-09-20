@@ -1,21 +1,14 @@
-<div class="board" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:board-updated">
-    <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}}</h2>
-    <h2> The Game Hand {{ hands }}</h2>
-    {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands %}
+<!-- For now we're just using a static SSE endpoint to keep things moving. replace /game/gameroom when channels is resolved-->
 
 
-    <ul class="card-list">
-        {% for hand in hands %}
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>{{ hand.user }}</span></p>
-                </div>
-                <div style="background-image: url('{{ hand.card.imgurl }}')" class="card__back">
-                    <p><span>{{ hand.card }}</span></p>
-                </div>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+<div class="board" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:{{ room_name }}-updated">
+    <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}} is a {{ playerhand.card }}
+    </h2>
+
+    <!-- Put our action bar here -->
+    {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
+
+    <!-- Put our Card Grid here -->
+    {% include "game/fragments/cards.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
+
 </div>

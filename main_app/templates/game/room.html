@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% ifequal user game.host %}
+<!-- {% ifequal user game.host %}
 {% ifequal game.stage '1' %}
 <div>
     <form action="{% url 'setup_game' %}" method="post">
@@ -13,12 +13,12 @@
     </form>
 </div>
 {% endifequal %}
-{% endifequal %}
+{% endifequal %} -->
 
 
 <section class="game">
-    <div ic-sse-src="/events/{{game.room}}" >
-        {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands %}
+    <div ic-sse-src="/events/gameroom" >
+        {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
     </div>
         
     <div class="chat">
