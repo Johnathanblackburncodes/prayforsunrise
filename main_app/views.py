@@ -38,10 +38,16 @@ def room(request, room_name):
         print(game)
         return redirect('/')
     hands = Hand.objects.filter(game=game)
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+    print(f'playerhand is {playerhand}')
     return render(request, 'game/room.html', {
         'room_name': room_name,
         'game': game,
-        'hands': hands
+        'hands': hands,
+        "playerhand": playerhand
     })
 
 #added to create a place for photos and bios to live. 
@@ -99,20 +105,44 @@ def setup_game( request ):
     start_game.save()
     #let the player's browsers update to the new cards
     print(f'send an SSE to {update_game.room}')
-    send_event('gameroom', 'board-updated', {'text': 'board-updated'})
+    send_event('gameroom', (update_game.room+'-updated'), {'text': 'board-updated'})
     #FIX: using a static room for SSE while we finish the game
     return redirect('rooms/' + update_game.room)
 
 def push_next_stage(request, room_name):
-    game = Game.objects.get(room=update_game.room)
-    index_of_stage = V_STAGES.index(start_game.stage)
-    game.stage = STAGES[index_of_stage+1][0]
+    game = Game.objects.get(room=room_name)
+    index_of_stage = V_STAGES.index(game.stage)
+    #make sure we don't push past the last index
+    if index_of_stage == V_STAGES[-1]:
+        next_stage = STAGES[0][0]
+    else:
+        next_stage = STAGES[index_of_stage+1][0]
+    game.stage = next_stage
+    game.save()
+    send_event('gameroom', (game.room+'-updated'), {'text': 'board-updated'})
+    return HttpResponse("Next Stage")
 
 def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
     print(f'This is our Game{game}, this is our room_name{room_name}')
     hands = Hand.objects.filter(game=game)
-    return HttpResponse(render_to_string("game/fragments/board.html", {"room_name":room_name, "hands":hands, "game":game, "request":request}))
+    playerhand = Hand.objects.filter(game=game, user=request.user)
+    print(f'playerhand is {playerhand}')
+
+    return HttpResponse(render_to_string("game/fragments/board.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        }))
+
+def hand_reveal(request, hand_id):
+    hand = Hand.objects.get(id=hand_id)
+    print(f'{request.user} reaveled {hand.user} is a {hand.card}')
+    # Return the card revealed by the seer here. 
+    response = f'<li class="card" ic-get-from="/hand/{hand_id}"> <img src={hand.card.imgurl}> </li>'
+    return HttpResponse(response)
 
 
 ### OTHER PAGES    
