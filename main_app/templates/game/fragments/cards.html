@@ -1,4 +1,6 @@
-
+<form id="defaults" >
+    <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
+</form>
 {% if game.stage == '2'%}
 <ul id="card-list">
     {% for hand in hands %}
@@ -102,10 +104,14 @@
     </ul>
 {% elif playerhand.card.role == 'R' and game.stage == '6' %}
     <span>Night is upon you, now is your chance to rob your neighbor...</span>
-    <ul id="robberList">
+    <form id="robber" class="remove-after">
+        <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
+    
+    <ul id="robberList" ic-include="#robber" ic-post-to="/hand/rob/" ic-trigger-on="end" ic-target=".remove-after">
     {% for hand in hands %}
         {% if hand.user != user %}
-            <li class="card">
+            <li class="card" >
+                <input type="hidden" name="card" value="{{hand.id}}">
                 <div class="card__flipper">
                     <div class="card__front">
                         <p class="card__name"><span>{{ hand.user }}</span></p>
@@ -119,8 +125,10 @@
         {% endif %}
     {% endfor %}
     </ul>
-    <ul id="player">
-        <li class="card">
+
+    <ul id="player" >
+        <li class="card filtered" >
+            <input type="hidden" name="card" value="{{playerhand.id}}">
             <div class="card__flipper">
                 <div class="card__front">
                     <p class="card__name"><span>{{ playerhand.user }}</span></p>
@@ -132,6 +140,7 @@
             </div>
         </li>
     </ul>
+    </form>
     <script>
         
         Sortable.create(robberList, { 
@@ -148,7 +157,7 @@
         Sortable.create(player, { 
             group: 'shared',
             swap: true,
-            
+            sort: false,
             swapClass: 'highlight',
             filter: '.filtered',
             animation: 150 });
