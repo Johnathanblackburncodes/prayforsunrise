@@ -126,23 +126,60 @@ def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
     print(f'This is our Game{game}, this is our room_name{room_name}')
     hands = Hand.objects.filter(game=game)
-    playerhand = Hand.objects.filter(game=game, user=request.user)
-    print(f'playerhand is {playerhand}')
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+    print(f'playerhand is {playerhand.card}')
 
-    return HttpResponse(render_to_string("game/fragments/board.html", {
+    return render(request, "game/fragments/board.html", {
         "room_name":room_name,
         "hands":hands,
         "game":game,
         "playerhand":playerhand,
         "request":request
-        }))
+        })
 
 def hand_reveal(request, hand_id):
     hand = Hand.objects.get(id=hand_id)
-    print(f'{request.user} reaveled {hand.user} is a {hand.card}')
+    print(f'{request.user} revealed {hand.user} is a {hand.card}')
     # Return the card revealed by the seer here. 
     response = f'<li class="card" ic-get-from="/hand/{hand_id}"> <img src={hand.card.imgurl}> </li>'
     return HttpResponse(response)
+
+def hand_rob(request):
+    print(request.user)
+    try:
+        card = request.POST.get('card','')
+    except:
+        pass
+    print(card)
+    try:
+        victim_hand = Hand.objects.get(id=card)
+        player_hand = Hand.objects.get(user=request.user)
+    except: 
+        print('Robber went wrong')
+    swaplist = [victim_hand.card.id, player_hand.card.id]
+    print(swaplist)
+    try:
+        new_victim_card = Card.objects.get(id=swaplist[1])
+        new_player_card = Card.objects.get(id=swaplist[0])
+    except:
+        pass
+    player_hand.card = new_player_card
+    victim_hand.card = new_victim_card
+    victim_hand.save()
+    player_hand.save()
+
+    print(victim_hand.card.id)
+    print(f'{request.POST}')
+    return render(request, "game/fragments/revealcard.html", {
+        "hand":player_hand,
+        "request":request
+    })
+
+def hand_troublemaker(request):
+    card_list = request.POST.getlist('card')
 
 
 ### OTHER PAGES    
