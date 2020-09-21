@@ -4,26 +4,24 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-#parse out our templates for api calls 
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-#add our SSE command
 from django_eventstream import send_event
 
 import uuid, random
-import boto3 #added for AWS pic SVL
+import boto3 
 
-#import our own forms and models
+
 from .forms import GameForm, SetupGameForm
-from .models import Profile, Game, Card, Hand, STAGES
+from .models import Profile, Game, Card, Hand, STAGES, Photo
 
-#Needed for AWS SVL
+
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'prayforsunrise'
 
-#need a list of keys from our stages tuple since we're only matching the first item, not the entire tuple
+
 V_STAGES = [t[0] for t in STAGES if t[0]]
-# Create your views here.
+
 
 
 def home(request):
@@ -50,23 +48,31 @@ def room(request, room_name):
         "playerhand": playerhand
     })
 
-#added to create a place for photos and bios to live. 
+
 def profile(request, user_id):
-    profile = Profile.objects.get(id=user_id)
+    profile = Profile.objects.get(puser=user_id)
+    image = ''
+    
+    try:
+        image = Photo.objects.get(profile=profile.id)
+        print('image is,', image)
+
+    except:
+        print('No Photo Found')
+
     print('this is PROFILE', profile)
+    print('this is user_id', user_id)
     return render(request, 'profile.html', {
-        'profile': profile
+        'profile': profile,
+        'image': image
     })
 
 ### GAME FUNCTIONS
 
 def add_game(request):
   form = GameForm(request.POST)
-  # validate the form
   new_room = ''
   if form.is_valid():
-    # don't save the form to the db until it
-    # has the host_id assigned
     new_game = form.save(commit=False)
     try:
         new_game.room = uuid.uuid4().hex[:4]
@@ -85,14 +91,10 @@ def setup_game( request ):
     form = SetupGameForm(request.POST)
     if form.is_valid():
         update_game=form.save(commit=False)
-    #None of the above is doing anything but it's a placeholder while we brute force setup
     start_game = Game.objects.get(room=update_game.room)
-    
     index_of_stage = V_STAGES.index(start_game.stage)
-    #gets the list of users in our game
     players = start_game.user.all()
     
-    #lets create a hand for each user in the game.
     for player in players:
         print(f'{player} in {players}')
         new_hand = Hand()
@@ -103,7 +105,7 @@ def setup_game( request ):
         new_hand.save()
     start_game.stage = STAGES[index_of_stage+1][0]
     start_game.save()
-    #let the player's browsers update to the new cards
+
     print(f'send an SSE to {update_game.room}')
     send_event('gameroom', (update_game.room+'-updated'), {'text': 'board-updated'})
     #FIX: using a static room for SSE while we finish the game
@@ -210,35 +212,38 @@ def hand_troublemaker(request):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        # This is how to create a 'user' form object
-        # that includes the data from the browser
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            # This will add the user to the database
             user = form.save()
-            # This is how we log a user in via code
+            profile = Profile(puser=user)
+            profile.save()
             login(request, user)
             return redirect('/')
         else:
             error_message = 'Invalid sign up - try again'
-    # A bad POST or a GET request, so render signup.html with an empty form
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
 
-def add_photo(request, user_id):
-    photo_file = request.FILES.get('photo-file', NONE)
-
+def add_photo(request, user_id, profile_id):
+    photo_file = request.FILES.get('photo-file', None)
+    print('user ID on 141 = ', user_id)
     if photo_file:
         s3 = boto3.client('s3')
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-
+        
         try:
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            photo = Profile(image=url, puser=user_id)
+            user = User.objects.get(id=user_id)
+            profile = Profile.objects.get(id=profile_id)
+            photo = Photo(image=url, puser=user, profile=profile)
             photo.save()
-        except:
+            print('user ID AFTER SAVE =', user_id)
+        except Exception as e:
+            print('e =', e)
             print('Oops, something went wrong. Please try again.')
-        return render('profile/<int:user_id>/', user_id=user_id )
+    return redirect('profile', user_id) 
+
+
