@@ -5,6 +5,10 @@
 
 
 <section class="game">
+    <div class="rename-me-john" ic-get-from="/game/{{ room_name }}/actions" ic-trigger-on="sse:{{ room_name }}-updated">
+    <!-- Put our action bar here -->
+        {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
+    </div>
     <div class="game-container" ic-sse-src="/events/gameroom">
         {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
     </div>
