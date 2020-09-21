@@ -209,6 +209,28 @@ def hand_rob(request):
 def hand_troublemaker(request):
     card_list = request.POST.getlist('card')
 
+def hand_vote(request, room_name):
+    print(request.user)
+    try:
+        card = request.POST.get('card','')
+        card_list = request.POST.getlist('card')
+    except:
+        pass
+    print(card_list)
+    game = Game.objects.get(room=room_name)
+    hands = Hand.objects.filter(game=game)
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+
+    return render(request, "game/fragments/board.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
 
 ### OTHER PAGES    
 
