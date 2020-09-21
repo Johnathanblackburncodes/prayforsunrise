@@ -7,7 +7,7 @@
 
   {% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
 
-  <form method="post" action="{% url 'signup' %}">
+  <form class="form" method="post" action="{% url 'signup' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <!-- SVL: Adding in the Bio Section -->
