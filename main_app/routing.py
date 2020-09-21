@@ -17,6 +17,6 @@ websocket_urlpatterns = [
 urlpatterns = [
     re_path(r'^events/(?P<room_name>\w+)/$', AuthMiddlewareStack(
         URLRouter(django_eventstream.routing.urlpatterns)
-    ), {'channels': ['18c0']}),
+    ), {'channels': [r'gameroom']}),
     url(r'', AsgiHandler),
 ]

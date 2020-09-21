@@ -21,6 +21,8 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 - Django
 - Heroku
 - PostreSQL
+- intercoolerJS
+- sortableJS
 
 
 ## User Stories 

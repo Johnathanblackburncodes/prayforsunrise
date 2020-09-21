@@ -143,6 +143,6 @@ LOGOUT_REDIRECT_URL = '/'
 """
 settings for production only -- uncomment before deploying to heroku
 
+"""
 import django_heroku
 django_heroku.settings(locals())
-"""

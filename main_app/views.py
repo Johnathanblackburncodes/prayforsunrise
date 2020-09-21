@@ -36,10 +36,16 @@ def room(request, room_name):
         print(game)
         return redirect('/')
     hands = Hand.objects.filter(game=game)
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+    print(f'playerhand is {playerhand}')
     return render(request, 'game/room.html', {
         'room_name': room_name,
         'game': game,
-        'hands': hands
+        'hands': hands,
+        "playerhand": playerhand
     })
 
 
@@ -73,7 +79,7 @@ def add_game(request):
         new_game.host_id = request.user.id
         new_game.stage = STAGES[0][0]
         new_game.save()
-        new_room = 'rooms/' + new_game.room
+        new_room = '/rooms/' + new_game.room
     except:
         print('An Error has occured generating your room')
     
@@ -101,19 +107,99 @@ def setup_game( request ):
     start_game.save()
 
     print(f'send an SSE to {update_game.room}')
-    send_event(update_game.room, 'board-updated', {'text': 'board_updated'})
+    send_event('gameroom', (update_game.room+'-updated'), {'text': 'board-updated'})
+    #FIX: using a static room for SSE while we finish the game
     return redirect('rooms/' + update_game.room)
 
 def push_next_stage(request, room_name):
-    game = Game.objects.get(room=update_game.room)
-    index_of_stage = V_STAGES.index(start_game.stage)
-    game.stage = STAGES[index_of_stage+1][0]
+    game = Game.objects.get(room=room_name)
+    index_of_stage = V_STAGES.index(game.stage)
+    #make sure we don't push past the last index
+    if index_of_stage == V_STAGES[-1]:
+        next_stage = STAGES[0][0]
+    else:
+        next_stage = STAGES[index_of_stage+1][0]
+    game.stage = next_stage
+    game.save()
+    send_event('gameroom', (game.room+'-updated'), {'text': 'board-updated'})
+    return HttpResponse("Next Stage")
 
 def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
     print(f'This is our Game{game}, this is our room_name{room_name}')
     hands = Hand.objects.filter(game=game)
-    return HttpResponse(render_to_string("game/fragments/board.html", {"room_name":room_name, "hands":hands, "game":game, "request":request}))
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+    print(f'playerhand is {playerhand.card}')
+
+    return render(request, "game/fragments/board.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
+
+def generate_actions(request, room_name):
+    game = Game.objects.get(room=room_name)
+    print(f'This is our Game{game}, this is our room_name{room_name}')
+    hands = Hand.objects.filter(game=game)
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+    print(f'playerhand is {playerhand.card}')
+
+    return render(request, "game/fragments/actions.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
+
+def hand_reveal(request, hand_id):
+    hand = Hand.objects.get(id=hand_id)
+    print(f'{request.user} revealed {hand.user} is a {hand.card}')
+    # Return the card revealed by the seer here. 
+    response = f'<li class="card" ic-get-from="/hand/{hand_id}"> <img src={hand.card.imgurl}> </li>'
+    return HttpResponse(response)
+
+def hand_rob(request):
+    print(request.user)
+    try:
+        card = request.POST.get('card','')
+    except:
+        pass
+    print(card)
+    try:
+        victim_hand = Hand.objects.get(id=card)
+        player_hand = Hand.objects.get(user=request.user)
+    except: 
+        print('Robber went wrong')
+    swaplist = [victim_hand.card.id, player_hand.card.id]
+    print(swaplist)
+    try:
+        new_victim_card = Card.objects.get(id=swaplist[1])
+        new_player_card = Card.objects.get(id=swaplist[0])
+    except:
+        pass
+    player_hand.card = new_player_card
+    victim_hand.card = new_victim_card
+    victim_hand.save()
+    player_hand.save()
+
+    print(victim_hand.card.id)
+    print(f'{request.POST}')
+    return render(request, "game/fragments/revealcard.html", {
+        "hand":player_hand,
+        "request":request
+    })
+
+def hand_troublemaker(request):
+    card_list = request.POST.getlist('card')
 
 
 ### OTHER PAGES    
