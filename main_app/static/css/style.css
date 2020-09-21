@@ -1,5 +1,7 @@
 /* Colors  */
-
+.white {
+  color: white;
+}
 
 
 /* Default styling */
@@ -21,7 +23,6 @@ body {
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
-  color: white;
 }
 
 main {
@@ -317,6 +318,7 @@ textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .game {
@@ -327,8 +329,16 @@ textarea {
   justify-content: space-between;
 }
 
+.game-container {
+  width: 900px;
+}
+
 .chat {
   width: 40%;
+}
+
+.chat-input {
+  width: 100%;
 }
 
 /* Layout  */
@@ -365,11 +375,13 @@ textarea {
 
 #room-name-input {
   flex-grow: 1;
+  border: 2px solid rgb(159, 128, 80);
+  border-radius: 20px;
 }
 
 input[type=button] {
   background-color: rgb(159, 128, 80);
-  border: none;
+  border-radius: 20px;
   color: white;
   padding: 3px 32px;
   text-decoration: none;
@@ -380,7 +392,7 @@ input[type=button] {
 
 input[type=submit] {
   background-color: rgb(159, 128, 80);
-  border: none;
+  border-radius: 20px;
   color: white;
   padding: 3px 32px;
   text-decoration: none;

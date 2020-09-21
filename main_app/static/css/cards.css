@@ -25,7 +25,7 @@
   width: calc(100% * .3333 - 30px + .3333 * 30px);
   height: 231px;
   margin: 0 15px 15px 0;
-  perspective: 1000;
+  perspective: 1000px;
 }
 
 .card__front {
@@ -33,7 +33,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-<<<<<<< HEAD
   transform: rotateY(0);
   z-index: 2;
   overflow: hidden;
@@ -80,7 +79,6 @@
   transform: rotateY(0);
   z-index: 2;
   overflow: hidden;
-=======
 }
 
 .execute-card {
@@ -94,5 +92,74 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
->>>>>>> 447c79a8743014685ce8cef64eea515ecf93de88
+}
+
+
+/* new card  */
+
+.card-list2 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: calc((100% / 3) - 12px);
+  height: 403px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 81%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280187/moonlight%20cards/53302264_1294131164045217_4780815194819395584_n_hvdixs.png);
+  color: black;
+  font-weight: 800;
+  transform: rotateY(180deg);
+}
+
+.deactivated {
+  transition: none;
+}
+
+.player-card {
+  font-family: 'Metal Mania', cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  height: 50px;
+  background-color: #DFDFDF;
 }

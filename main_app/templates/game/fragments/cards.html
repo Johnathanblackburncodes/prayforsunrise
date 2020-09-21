@@ -1,24 +1,93 @@
-<!-- <div class="flip-card">
-    <div class="flip-card-inner">
-        <div class="flip-card-front">
-            <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+<!-- <ul class="card-list2">
+    <li class="flip-card">
+        <div class="flip-card-inner">
+            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png')"
+                class="flip-card-front">
+            </div>
+            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280187/moonlight%20cards/53302264_1294131164045217_4780815194819395584_n_hvdixs.png')"
+                class="flip-card-back">
+                <h2>John</h2>
+                <p>Seer</p>
+            </div>
         </div>
-        <div class="flip-card-back">
-            <h2>John Doe</h2>
-            <p>Architect & Engineer</p>
-            <p>We love that guy</p>
+        <div class="player-card">
+            <p>John</p>
         </div>
-    </div>
-</div> -->
+    </li>
+    <li class="flip-card">
+        <div class="flip-card-inner">
+            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png')"
+                class="flip-card-front">
+            </div>
+            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280187/moonlight%20cards/53302264_1294131164045217_4780815194819395584_n_hvdixs.png')"
+                class="flip-card-back">
+                <h2>John</h2>
+                <p>Seer</p>
+            </div>
+        </div>
+        <div class="player-card">
+            <p>John</p>
+        </div>
+    </li>
+    <li class="flip-card">
+        <div class="flip-card-inner">
+            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png')"
+                class="flip-card-front">
+            </div>
+            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280187/moonlight%20cards/53302264_1294131164045217_4780815194819395584_n_hvdixs.png')"
+                class="flip-card-back">
+                <h2>John</h2>
+                <p>Seer</p>
+            </div>
+        </div>
+        <div class="player-card">
+            <p>John</p>
+        </div>
+    </li>
+</ul> -->
 
-{% if playerhand.card.role == 'W' and game.stage == '3'%}
+
+{% if game.stage == '2'%}
+<ul id="card-list">
+    {% for hand in hands %}
+    {% if hand.user != user %}
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p><span>hand.card is {{ hand.card }}</span></p>
+                <p><span>user.hand.card is {{ hand.card }}</span></p>
+            </div>
+            <div class="card__back">
+            </div>
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<ul id="player">
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+                <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
+            </div>
+            <div class="card__back">
+            </div>
+        </div>
+    </li>
+</ul>
+
+
+{% elif playerhand.card.role == 'W' and game.stage == '3'%}
 <ul class="card-list">
     {% for hand in hands %}
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
                 {% if hand.card.role == 'W' %}
-                <img src="{{ hand.card.imgurl }}" alt="">
+                <img src="{{ hand.card.imgurl }}" alt="" height="231px">
                 {% endif %}
                 <p class="card__name"><span>{{ hand.user }}</span></p>
                 <p><span>hand.card.role is {{ hand.card.role }}</span></p>
@@ -31,61 +100,50 @@
     {% endfor %}
 </ul>
 {% elif playerhand.card.role == 'S' and game.stage == '4' %}
-<ul class="card-list">
+<ul id="card-list">
     {% for hand in hands %}
-    <li class="card" ic-get-from="/hand/{{ hand.id }}">
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
-            </div>
-            <div class="card__back">
-            </div>
+    {% if hand.user != user %}
+    <li class="card" ic-get-from="/hand/{{ hand.id }}"></li>
+    <div class="card__flipper">
+        <div class="card__front">
+            <p class="card__name"><span>{{ hand.user }}</span></p>
+            <p><span>hand.card is {{ hand.card }}</span></p>
+            <p><span>user.hand.card is {{ hand.card }}</span></p>
         </div>
+        <div class="card__back">
+        </div>
+    </div>
     </li>
+    {% endif %}
     {% endfor %}
 </ul>
-{% elif playerhand.card.role == 'S' and game.stage == '5' %}
-<ul class="card-list">
-    {% for hand in hands %}
+<ul id="player">
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
+                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+                <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
             <div class="card__back">
+
             </div>
         </div>
     </li>
-    {% endfor %}
 </ul>
-{% elif playerhand.card.role == 'R' and game.stage == '6' %}
-<span>Night is upon you, now is your chance to rob your neighbor...</span>
-<ul id="simpleList1">
+{% elif playerhand.card.role == 'S' and game.stage == '5' %}
+<ul class="card-list">
     {% for hand in hands %}
     <li>
         {{hand.card}}
     </li>
     {% endfor %}
 </ul>
-<ul id="simpleList">
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
-</ul>
-<script>
-
-    Sortable.create(simpleList, { animation: 150 });
-    Sortable.create(simpleList1, { animation: 150, ghostClass: 'blue-background-class' });
-</script>
-{% elif playerhand.card.role == 'M' and game.stage == '7' %}
-<ul class="card-list">
+{% elif playerhand.card.role == 'R' and game.stage == '6' %}
+<span>Night is upon you, now is your chance to rob your neighbor...</span>
+<ul id="robberList">
     {% for hand in hands %}
+    {% if hand.user != user %}
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
@@ -97,8 +155,86 @@
             </div>
         </div>
     </li>
+    {% endif %}
     {% endfor %}
 </ul>
+<ul id="player">
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                <p><span>playerhand.card is {{ playerhand.card }}</span></p>
+                <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
+            </div>
+            <div class="card__back">
+            </div>
+        </div>
+    </li>
+</ul>
+<script>
+
+    Sortable.create(robberList, {
+        group: {
+            name: 'shared',
+            put: false,
+        },
+        swap: true,
+        sort: false,
+        swapClass: 'highlight',
+        filter: '.filtered',
+        animation: 150
+    });
+
+    Sortable.create(player, {
+        group: 'shared',
+        swap: true,
+
+        swapClass: 'highlight',
+        filter: '.filtered',
+        animation: 150
+    });
+</script>
+{% elif playerhand.card.role == 'M' and game.stage == '7' %}
+<ul class="card-list">
+    {% for hand in hands %}
+    {% if hand.user != user %}
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p><span>hand.card is {{ hand.card }}</span></p>
+                <p><span>user.hand.card is {{ hand.card }}</span></p>
+            </div>
+            <div class="card__back">
+            </div>
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<ul id="player">
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+                <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
+            </div>
+            <div class="card__back">
+
+            </div>
+        </div>
+    </li>
+</ul>
+<script>
+    Sortable.create(troublemakerList, {
+        swap: true,
+        swapClass: 'highlight',
+        filter: '.filtered',
+        animation: 150
+    });
+
+</script>
 {% elif playerhand.card.role == 'D' and game.stage == '8' %}
 <ul class="card-list">
     {% for hand in hands %}
@@ -161,7 +297,7 @@
 </ul>
 <ul class="card-list" id="votedList">
     {% for hand in hands %}
-    <li class="card-execute">
+    <li class="execute-card">
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span>Execute</span></p>
@@ -169,8 +305,9 @@
             <div class="card__back">
             </div>
         </div>
-        {% endfor %}
     </li>
+    {% endfor %}
+
 </ul>
 <script>
     Sortable.create(voteList, {
