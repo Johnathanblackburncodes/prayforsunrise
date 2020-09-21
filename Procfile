@@ -1,2 +1,2 @@
 
-web: uvicorn prayforsunrise.asgi:application
+web: uvicorn prayforsunrise.asgi:application --lifespan off
