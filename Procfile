@@ -1,2 +1,2 @@
 
-web: uvicorn prayforsunrise.asgi:application --lifespan off
+web: daphne prayforsunrise.asgi:application
