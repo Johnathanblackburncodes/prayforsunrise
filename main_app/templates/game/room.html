@@ -3,30 +3,27 @@
 {% block content %}
 
 
-
 <section class="game">
     <div class="rename-me-john" ic-get-from="/game/{{ room_name }}/actions" ic-trigger-on="sse:{{ room_name }}-updated">
-    <!-- Put our action bar here -->
+        <!-- Put our action bar here -->
         {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
     </div>
     <div class="game-container" ic-sse-src="/events/gameroom">
         {% include "game/fragments/board.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
-    </div>
-
-    <div class="chat">
-        <textarea hintText="Enter a message." id="chat-log"></textarea><br>
-        <div class="room-btn">
-            <!-- <input id="chat-message-input" type="text"><br>
+        <div class="chat">
+            <textarea hintText="Enter a message." id="chat-log"></textarea><br>
+            <div class="room-btn">
+                <!-- <input id="chat-message-input" type="text"><br>
             <input id="chat-message-submit" type="button" value="Send"> -->
-            <div class="chat-input">
-                <form>
-                    <input type="text" id="chat-message-input" placeholder="Send a message..." />
-                    <input id="chat-message-submit" type="button" value="Send">
-                </form>
+                <div class="chat-input">
+                    <form>
+                        <input type="text" id="chat-message-input" placeholder="Send a message..." />
+                        <input id="chat-message-submit" type="button" value="Send">
+                    </form>
+                </div>
             </div>
+            {{ room_name|json_script:"room-name" }}
         </div>
-        {{ room_name|json_script:"room-name" }}
-    </div>
 </section>
 
 <script>
