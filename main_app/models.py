@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+
 
 STAGES = (
     ('1', 'SETUP', ),
@@ -34,14 +34,9 @@ STATUS = (
 )
 
 class Card(models.Model):
-    # ImageURL - Made into a seperate class/changed to inclass
-    # avatar = models.FOREIGNKEY(Avatar, on_delete=models.CASCADE)
     imgurl = models.CharField(max_length=200)
-
-
     #CharacterName
     name = models.CharField(max_length=20)
-
     #Description/Special Text
     description = models.TextField(max_length=250)
 
@@ -103,28 +98,13 @@ class Hand(models.Model):
 
 
 class Profile(models.Model):
-    #Bio
     bio = models.CharField(max_length=20)
-
-    #Eaten - boolean?**********// per nathan - changed to int/user 
-    #eaten = models.
     eaten = models.IntegerField(default=0)
-
-    #Executed - boolean?*******// per nathan - changed to int/user 
     executed = models.IntegerField(default=0)
-
-
-    #Won/End Game Status - boolean?********// per nathan - changed to int/user 
-    #we might change this to an ENUM of some kind but integer will give us flexibility while we work it out.
     status = models.IntegerField(default=0)
-
-    #link our profile to a user
     puser = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Photo(models.Model):
     image = models.CharField(max_length=200)
     puser = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
-    # def __str__(self):
-    #     return f"Photo for user_id: {self.user_id} @{self.url}"
