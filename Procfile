@@ -1,2 +1,2 @@
 
-web: uvicorn prayforsunrise.asgi:main_app 
+web: uvicorn prayforsunrise.asgi:application
