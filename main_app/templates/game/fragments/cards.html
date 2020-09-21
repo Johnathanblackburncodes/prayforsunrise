@@ -1,13 +1,46 @@
 
+{% if game.stage == '2'%}
+<ul id="card-list">
+    {% for hand in hands %}
+        {% if hand.user != user %}
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>{{ hand.user }}</span></p>
+                    <p><span>hand.card is {{ hand.card }}</span></p>
+                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+                </div>
+                <div class="card__back">
+                </div>
+            </div>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    <ul id="player">
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                    <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+                    <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
+                </div>
+                <div class="card__back">
 
-{% if playerhand.card.role == 'W' and game.stage == '3'%}
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+{% elif playerhand.card.role == 'W' and game.stage == '3'%}
     <ul class="card-list">
         {% for hand in hands %}
         <li class="card">
             <div class="card__flipper">
                 <div class="card__front">
                     {% if hand.card.role == 'W' %}
-                        <img src="{{ hand.card.imgurl }}" alt="">
+                        <img src="{{ hand.card.imgurl }}" alt="" height="231px">
                     {% endif %}
                     <p class="card__name"><span>{{ hand.user }}</span></p>
                     <p><span>hand.card.role is {{ hand.card.role }}</span></p>
@@ -20,21 +53,37 @@
         {% endfor %}
     </ul>
 {% elif playerhand.card.role == 'S' and game.stage == '4' %}
-    <ul class="card-list">
-    {% for hand in hands %}
-        <li class="card" ic-get-from="/hand/{{ hand.id }}">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>{{ hand.user }}</span></p>
-                    <p><span>hand.card is {{ hand.card }}</span></p>
-                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+    <ul id="card-list">
+        {% for hand in hands %}
+            {% if hand.user != user %}
+            <li class="card" ic-get-from="/hand/{{ hand.id }}"></li>
+                <div class="card__flipper">
+                    <div class="card__front">
+                        <p class="card__name"><span>{{ hand.user }}</span></p>
+                        <p><span>hand.card is {{ hand.card }}</span></p>
+                        <p><span>user.hand.card is {{ hand.card }}</span></p>
+                    </div>
+                    <div class="card__back">
+                    </div>
                 </div>
-                <div class="card__back">
+            </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        <ul id="player">
+            <li class="card">
+                <div class="card__flipper">
+                    <div class="card__front">
+                        <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                        <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+                        <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
+                    </div>
+                    <div class="card__back">
+    
+                    </div>
                 </div>
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+            </li>
+        </ul>
 {% elif playerhand.card.role == 'S' and game.stage == '5' %}
     <ul class="card-list">
     {% for hand in hands %}
@@ -55,17 +104,19 @@
     <span>Night is upon you, now is your chance to rob your neighbor...</span>
     <ul id="robberList">
     {% for hand in hands %}
-        <li class="card">
-            <div class="card__flipper">
-                <div class="card__front">
-                    <p class="card__name"><span>{{ hand.user }}</span></p>
-                    <p><span>hand.card is {{ hand.card }}</span></p>
-                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+        {% if hand.user != user %}
+            <li class="card">
+                <div class="card__flipper">
+                    <div class="card__front">
+                        <p class="card__name"><span>{{ hand.user }}</span></p>
+                        <p><span>hand.card is {{ hand.card }}</span></p>
+                        <p><span>user.hand.card is {{ hand.card }}</span></p>
+                    </div>
+                    <div class="card__back">
+                    </div>
                 </div>
-                <div class="card__back">
-                </div>
-            </div>
-        </li>
+            </li>
+        {% endif %}
     {% endfor %}
     </ul>
     <ul id="player">
@@ -74,7 +125,7 @@
                 <div class="card__front">
                     <p class="card__name"><span>{{ playerhand.user }}</span></p>
                     <p><span>playerhand.card is {{ playerhand.card }}</span></p>
-                    <img src="{{ playerhand.card.imgurl }}" alt="">
+                    <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
                 </div>
                 <div class="card__back">
                 </div>
@@ -84,7 +135,7 @@
     <script>
         
         Sortable.create(robberList, { 
-            grou: {
+            group: {
                 name: 'shared',
                 put: false,
             },
@@ -97,7 +148,7 @@
         Sortable.create(player, { 
             group: 'shared',
             swap: true,
-            sort: false,
+            
             swapClass: 'highlight',
             filter: '.filtered',
             animation: 150 });
@@ -106,11 +157,8 @@
     <span>Night is upon you, now is your chance to rob your neighbor...</span>
     <ul id="troublemakerList">
     {% for hand in hands %}
-        {% if hand.user == user %}
-            <li class="card filtered">
-        {% else %}
-            <li class="card">
-        
+        {% if hand.user != user %}
+        <li class="card">
             <div class="card__flipper">
                 <div class="card__front">
                     <p class="card__name"><span>{{ hand.user }}</span></p>
@@ -120,8 +168,8 @@
                 <div class="card__back">
                 </div>
             </div>
-        {% endif %}
         </li>
+        {% endif %}
     {% endfor %}
     </ul>
     <ul id="player">
@@ -130,11 +178,13 @@
                 <div class="card__front">
                     <p class="card__name"><span>{{ playerhand.user }}</span></p>
                     <p><span>playerhand..card is {{ playerhand.card }}</span></p>
-                    <img src="{{ playerhand.card.imgurl }}" alt="">
+                    <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
                 </div>
                 <div class="card__back">
+
                 </div>
             </div>
+        </li>
     </ul>
     <script>
         Sortable.create(troublemakerList, { 
@@ -189,7 +239,7 @@
     </ul>
     <ul class="card-list" id="votedList">
         {% for hand in hands %}
-        <li class="card-execute">
+        <li class="execute-card">
                 <div class="card__flipper">
                     <div class="card__front">
                         <p class="card__name"><span>Execute</span></p>
@@ -197,8 +247,9 @@
                     <div class="card__back">
                     </div>
                 </div>
-            {% endfor %}
         </li>
+        {% endfor %}
+        
     </ul>
     <script>
         Sortable.create(voteList, { 
