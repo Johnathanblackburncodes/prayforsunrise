@@ -19,3 +19,7 @@ urlpatterns = [
     path('profile/<int:user_id>/', views.profile, name='profile'), 
     path('rooms/<str:room_name>/', views.room, name='room'), 
 ]
+
+#With profile now created we will need to either redirect user to the profile upon signup and/or have a button on the navbar for user. I advocate for both.
+
+#need to add forms to templates

@@ -5,7 +5,7 @@
     <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}} is a {{ playerhand.card }}
     </h2>
 
-    
+
 
     <!-- Put our Card Grid here -->
     {% include "game/fragments/cards.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
