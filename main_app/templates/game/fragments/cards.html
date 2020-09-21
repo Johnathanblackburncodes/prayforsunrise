@@ -213,44 +213,44 @@
     {% endfor %}
 </ul>
 {% elif game.stage == '9' %}
-<ul class="card-list" id="voteList">
-    {% for hand in hands %}
-    {% if hand.user == user %}
-    <li class="card filtered">
-        {% else %}
-    <li class="card">
-        {% endif %}
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
+<form id="vote" class="remove-after">
+    <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
+
+    
+    <ul class="card-list" id="voteList" ic-include="#robber" ic-post-to="/hand/vote/" ic-trigger-on="end" ic-target=".remove-after"">
+        {% for hand in hands %}
+        {% if hand.user == user %}
+        <li class="card filtered">
+            {% else %}
+        <input type="hidden" name="card" value="{{hand.id}}">
+        <li class="card">
+            {% endif %}
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>{{ hand.user }}</span></p>
+                    <p><span>hand.card is {{ hand.card }}</span></p>
+                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+                </div>
+                <div class="card__back">
+                </div>
             </div>
-            <div class="card__back">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-<ul class="card-list" id="votedList">
-    {% for hand in hands %}
-    <li class="execute-card">
-        <div class="card__flipper">
+        </li>
+        {% endfor %}
+    </ul>
+    <ul class="card-list" id="victimList">
+        <li class="execute-card">
             <div class="card__front">
                 <p class="card__name"><span>Execute</span></p>
             </div>
-            <div class="card__back">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-
-</ul>
+        </li>
+    </ul>
+</form>
 <script>
     Sortable.create(voteList, {
         group: {
             name: 'shared',
-            put: false
+            put: true
+            
         },
         sort: false,
         swap: true,
@@ -262,7 +262,7 @@
     Sortable.create(victimList, {
         group: {
             name: 'shared',
-            put: true
+            put: false
         },
         sort: false,
         swap: true,

@@ -16,8 +16,7 @@ def game_next_stage(game):
 
 def game_clear_hands(game):
     try:
-        old_hands = game.hands.all()
-    except expression as identifier:
-        pass
-    # for hand in old_hands:
-    #     hand.
+        success = objects.filter(game=game).delete()
+    except:
+        return(False)
+    return(success)
