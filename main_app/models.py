@@ -108,3 +108,4 @@ class Photo(models.Model):
     image = models.CharField(max_length=200)
     puser = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
