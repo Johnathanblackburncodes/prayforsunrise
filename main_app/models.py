@@ -7,7 +7,7 @@ STAGES = (
     ('2', 'See Cards'),
     ('3', 'Werewolf'),
     ('4', 'Seer'),
-    ('5', 'Seer Revealse'),
+    ('5', 'Seer Reveals'),
     ('6', 'Robber'),
     ('7', 'Troublemaker'),
     ('8', 'Drunk'),

@@ -112,8 +112,13 @@ def setup_game( request ):
 def push_next_stage(request, room_name):
     game = Game.objects.get(room=room_name)
     index_of_stage = V_STAGES.index(game.stage)
+    print(f'Game Stage is : {game.stage}')
+    print(V_STAGES[index_of_stage])
+    print(f'{index_of_stage}: index of current stage. {V_STAGES[-1]} is V_stages final item. {STAGES[index_of_stage][0]} should be our current stage')
+    print(STAGES[index_of_stage])
     #make sure we don't push past the last index
-    if index_of_stage == V_STAGES[-1]:
+    if V_STAGES[index_of_stage] == V_STAGES[-1]:
+        print(f'{index_of_stage}: index of current stage. {V_STAGES[-1]} is V_stages final item should be the 99')
         next_stage = STAGES[0][0]
     else:
         next_stage = STAGES[index_of_stage+1][0]

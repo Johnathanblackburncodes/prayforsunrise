@@ -213,30 +213,6 @@
     {% endfor %}
 </ul>
 {% elif game.stage == '9' %}
-<ul class="card-list">
-    {% for hand in hands %}
-    <li class="card">
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
-            </div>
-            <div class="card__back">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-<script>
-    Sortable.create(drunkList, {
-        swap: true,
-        swapClass: 'highlight',
-        filter: '.filtered',
-        animation: 150
-    });
-</script>
-{% elif game.stage == '9' %}
 <ul class="card-list" id="voteList">
     {% for hand in hands %}
     {% if hand.user == user %}
@@ -256,7 +232,7 @@
     </li>
     {% endfor %}
 </ul>
-<ul class="card-list" id="victimList">
+<ul class="card-list" id="votedList">
     {% for hand in hands %}
     <li class="execute-card">
         <div class="card__flipper">
@@ -282,7 +258,7 @@
         filter: '.filtered',
         animation: 150
     });
-
+    
     Sortable.create(victimList, {
         group: {
             name: 'shared',
@@ -295,6 +271,21 @@
         animation: 150
     });
 </script>
+
+{% elif game.stage == '99' %}
+    <ul class="card-list">
+        {% for hand in hands %}
+        <li class="card">
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span>{{ hand.user }}</span></p>
+                     <img src="{{ hand.card.imgurl }}" alt="" height="231px">
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
 
 {% else %}
 <ul class="card-list">
