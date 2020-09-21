@@ -33,6 +33,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+<<<<<<< HEAD
   transform: rotateY(0);
   z-index: 2;
   overflow: hidden;
@@ -79,4 +80,19 @@
   transform: rotateY(0);
   z-index: 2;
   overflow: hidden;
+=======
+}
+
+.execute-card {
+  float: left;
+  position: relative;
+  width: calc(100% * .3333 - 30px + .3333 * 30px);
+  height: 231px;
+  margin: 0 15px 15px 0;
+  perspective: 1000;
+  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/b_rgb:ffffff/v1600645462/moonlight%20cards/behead-2027518_640_zcpa0l.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+>>>>>>> 447c79a8743014685ce8cef64eea515ecf93de88
 }

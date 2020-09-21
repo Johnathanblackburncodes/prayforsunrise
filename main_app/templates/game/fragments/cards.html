@@ -131,10 +131,22 @@
     </li>
     {% endfor %}
 </ul>
-{% else %}
-<ul class="card-list">
+<script>
+    Sortable.create(drunkList, {
+        swap: true,
+        swapClass: 'highlight',
+        filter: '.filtered',
+        animation: 150
+    });
+</script>
+{% elif game.stage == '9' %}
+<ul class="card-list" id="voteList">
     {% for hand in hands %}
+    {% if hand.user == user %}
+    <li class="card filtered">
+        {% else %}
     <li class="card">
+        {% endif %}
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span>{{ hand.user }}</span></p>
@@ -147,4 +159,59 @@
     </li>
     {% endfor %}
 </ul>
+<ul class="card-list" id="votedList">
+    {% for hand in hands %}
+    <li class="card-execute">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>Execute</span></p>
+            </div>
+            <div class="card__back">
+            </div>
+        </div>
+        {% endfor %}
+    </li>
+</ul>
+<script>
+    Sortable.create(voteList, {
+        group: {
+            name: 'shared',
+            put: false
+        },
+        sort: false,
+        swap: true,
+        swapClass: 'highlight',
+        filter: '.filtered',
+        animation: 150
+    });
+
+    Sortable.create(votedList, {
+        group: {
+            name: 'shared',
+            put: true
+        },
+        sort: false,
+        swap: true,
+        swapClass: 'highlight',
+        filter: '.filtered',
+        animation: 150
+    });
+</script>
+
+{% else %}
+<ul class="card-list">
+    {% for hand in hands %}
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p><img src="{{ hand.carg.imgurl }}" alt=""></p>
+            </div>
+            <div class="card__back">
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
 {% endif %}
