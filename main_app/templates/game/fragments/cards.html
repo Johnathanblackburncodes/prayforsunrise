@@ -2,19 +2,16 @@
     <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
 </form>
 {% if game.stage == '2'%}
-<ul class="card-list2">
+<ul class="card-list">
     {% for hand in hands %}
     {% if hand.user != user %}
-    <li class="flip-card">
-        <div class="flip-card-inner">
-            <div style="background-image: url('https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png')"
-                class="flip-card-front">
-            </div>
-            <div style="background-image: url('{{ playerhand.card.imgurl }}')" class="flip-card-back">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
-            </div>
+    <li class="card">
+        <div class="card__front">
+            <p class="card__name"><span>{{ hand.user }}</span></p>
+            <p><span>hand.card is {{ hand.card }}</span></p>
+            <p><span>user.hand.card is {{ hand.card }}</span></p>
+        </div>
+        <div class="card__back">
         </div>
     </li>
     {% endif %}
