@@ -65,51 +65,5 @@
         messageInputDom.value = '';
     };
 
-    var Flipper = (function () {
-        var card = $('.card');
-        var flipper = card.find('.flip-card-inner');
-
-        var flip = function () {
-            var thisCard = $(this);
-            var thisFlipper = thisCard.find('.flip-card-inner');
-
-            if (card.hasClass('active')) unflip();
-
-            thisCard.css({ 'z-index': '3' }).addClass('active');
-
-            thisFlipper.css({
-                'transform': 'rotateY(180deg)',
-                '-webkit-transform': 'rotateY(180deg)',
-                '-ms-transform': 'rotateY(180deg)'
-            }).addClass('active');
-
-            return false;
-        };
-
-        var unflip = function (e) {
-            card.css({ 'z-index': '1' }).removeClass('active');
-            flipper.css({
-                'transform': 'none',
-                '-webkit-transform': 'none',
-                '-ms-transform': 'none'
-            }).removeClass('active');
-        };
-
-        var bindActions = function () {
-            card.on('click', flip);
-            win.on('click', unflip);
-        }
-
-        var init = function () {
-            bindActions();
-        };
-
-        return {
-            init: init
-        };
-
-    }());
-
-    Flipper.init();
 </script>
 {% endblock %}
