@@ -1,2 +1,2 @@
 
-web: uvicorn prayforsunrise.asgi:application --port 80 --lifespan off
+web: uvicorn prayforsunrise.asgi:application --lifespan off
