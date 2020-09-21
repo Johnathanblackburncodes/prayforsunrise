@@ -103,27 +103,28 @@ class Hand(models.Model):
 
 
 class Profile(models.Model):
-    #AvatarURL 
-    # url = model.CharField(max_length=100)
-    #Charfield change to url string
-    image = models.CharField(max_length=200) #slightly edited due to AWS instructions SVL
-
-    
-
     #Bio
     bio = models.CharField(max_length=20)
 
     #Eaten - boolean?**********// per nathan - changed to int/user 
     #eaten = models.
-    eaten = models.IntegerField()
+    eaten = models.IntegerField(default=0)
 
     #Executed - boolean?*******// per nathan - changed to int/user 
-    executed = models.IntegerField()
+    executed = models.IntegerField(default=0)
 
 
     #Won/End Game Status - boolean?********// per nathan - changed to int/user 
     #we might change this to an ENUM of some kind but integer will give us flexibility while we work it out.
-    status = models.IntegerField()
+    status = models.IntegerField(default=0)
 
     #link our profile to a user
     puser = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Photo(models.Model):
+    image = models.CharField(max_length=200)
+    puser = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return f"Photo for user_id: {self.user_id} @{self.url}"

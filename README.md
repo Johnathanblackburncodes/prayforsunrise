@@ -1,6 +1,6 @@
 # Pray For Sunrise
 
-Pray for Sunrise is an online interactive gaming lobby where users can join a "game room", play Pray for Sunrise with others, and communicate via chat. 
+Pray for Sunrise is an online interactive gaming lobby where users can join a "game room", play Pray for Sunrise with others, and communicate via chat. The user can join a game with frine 
 
 
 ## Developers 
@@ -74,7 +74,7 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 ## Biggest Challenges
 - Merging & Debugging
 - Interactive Design 
-- Migrations
+- Migrations 
 
 
 ## Future Improvements

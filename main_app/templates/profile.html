@@ -9,9 +9,9 @@
     <br><br>
     <h1>Photo:</h1>
     <p>{{ profile.image }}</p>
-    <img alt="Profile Image" src="{{ profile.image }}">
+    <img alt="Profile Image" src="{{ image.image }}">
     <br><br>
-    <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST">
+    <form action="{% url 'add_photo' user.id profile.id %}" enctype="multipart/form-data" method="POST">
         {% csrf_token %}
         <input type="file" name="photo-file">
         <br><br>
