@@ -140,6 +140,24 @@ def generate_board(request, room_name):
         "request":request
         })
 
+def generate_actions(request, room_name):
+    game = Game.objects.get(room=room_name)
+    print(f'This is our Game{game}, this is our room_name{room_name}')
+    hands = Hand.objects.filter(game=game)
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+    print(f'playerhand is {playerhand.card}')
+
+    return render(request, "game/fragments/actions.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
+
 def hand_reveal(request, hand_id):
     hand = Hand.objects.get(id=hand_id)
     print(f'{request.user} revealed {hand.user} is a {hand.card}')

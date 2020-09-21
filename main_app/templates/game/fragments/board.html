@@ -4,20 +4,8 @@
 <div class="board" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:{{ room_name }}-updated">
     <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}} is a {{ playerhand.card }}
     </h2>
-    {% ifequal user game.host %}
-    {% ifequal game.stage '1' %}
-    <div>
-        <form action="{% url 'setup_game' %}" method="post">
-            {% csrf_token %}
-            {{  setup_game.as_p }}
-            <input type="hidden" name="room" value="{{ room_name }}">
-            <input type="submit" value="Start Game" class="btn">
-        </form>
-    </div>
-    {% endifequal %}
-    {% endifequal %}
-    <!-- Put our action bar here -->
-    {% include "game/fragments/actions.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
+
+    
 
     <!-- Put our Card Grid here -->
     {% include "game/fragments/cards.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}

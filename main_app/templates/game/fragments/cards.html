@@ -256,7 +256,7 @@
     </li>
     {% endfor %}
 </ul>
-<ul class="card-list" id="votedList">
+<ul class="card-list" id="victimList">
     {% for hand in hands %}
     <li class="execute-card">
         <div class="card__flipper">
@@ -283,7 +283,7 @@
         animation: 150
     });
 
-    Sortable.create(votedList, {
+    Sortable.create(victimList, {
         group: {
             name: 'shared',
             put: true
