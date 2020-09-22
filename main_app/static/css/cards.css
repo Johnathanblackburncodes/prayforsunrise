@@ -81,6 +81,11 @@
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
+.flip-card2{
+  width: 300px;
+  height: 200px;
+}
+
 /* This container is needed to position the front and back side */
 .flip-card-inner {
   position: relative;
@@ -93,6 +98,10 @@
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card2:hover .flip-card-inner {
   transform: rotateY(180deg);
 }
 
@@ -111,7 +120,12 @@
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
   color: black;
+  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png);
+  height: 300px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+
 
 /* Style the back side */
 .flip-card-back {
