@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 STAGES = (
     ('1', 'SETUP', ),
     ('2', 'See Cards'),
-    ('3', 'Night'),
-    ('4', 'Werewolf'),
-    ('5', 'Seer'),
+    ('3', 'Werewolf'),
+    ('4', 'Seer'),
+    ('5', 'Seer Revealse'),
     ('6', 'Robber'),
     ('7', 'Troublemaker'),
     ('8', 'Drunk'),

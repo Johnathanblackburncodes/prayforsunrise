@@ -4,3 +4,4 @@
 #######
 *.pyc
 __pycache__/
+# main_app/migrations/
