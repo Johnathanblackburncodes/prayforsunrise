@@ -13,6 +13,7 @@ urlpatterns = [
     path('game/<str:room_name>/actions', views.generate_actions, name='generate_actions'),
     path('game/<str:room_name>/next', views.push_next_stage, name='push_next_stage'),
     path('hand/rob/', views.hand_rob, name='hand_rob'),
+    path('hand/<str:room_name>/vote/', views.hand_vote, name='hand_vote'),
     path('hand/<str:hand_id>/', views.hand_reveal, name='hand_reveal'),
     path('accounts/signup/', views.signup, name='signup'),
     path('profile/<int:user_id>/<int:profile_id>/add_photo/', views.add_photo, name='add_photo'), 
