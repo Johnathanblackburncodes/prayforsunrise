@@ -5,6 +5,8 @@ import django_eventstream
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
+    path('rules/', views.rules, name='rules'),
     path('add_game/', views.add_game, name='add_game'),
     path('setup_game', views.setup_game, name='setup_game'),
     path('events/<str:room_name>/', views.generate_board, name='generate_board'),

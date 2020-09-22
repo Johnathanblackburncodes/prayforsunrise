@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Welcome to the Rules</h1>
+<p>Here is where you can get an idea of how the game works!</p>
+
+<h2>You are a citizen of the village, but evil is afoot. While some of the players are mere villagers, some even purhaps
+    with special abilities or traits, some are vile, evil, hungry werewolves ready to devour the entire village by
+    midday! The villagers know that during this harrowing full moon, the werewolves will come for them. Thus the
+    villagers go to bed, determined to stay alive come dawn knowing they will vote to execute suspected werewolves
+    tomorrow morning. When the villagers all wake, some villagers with special powers may share what they have learned
+    about their fellow villagers, but also, the werewolves will likely lie. For you see, no one can truly be fully
+    trusted upon their word. Will the villagers prevail and destroy the werewolf scourge, or will the Werewolves have
+    their long awaited meal? </h2>
+
+<div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: Three Cards In the Middle.</h3>
+        <p>
+            Each User is given a card, describing their role. While three cards remain in the center. All other cards
+            are discarded and thus not relevant to gameplay.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: The Witching Hour</h3>
+        <p>
+            Night comes to the village, with every villager keenly aware that at dawn they will vote to execute a
+            suspected werewolf. During this time, some villagers with special powers may use their abilities to find out
+            who can be trusted and who must die. Each player with special abilities wakes at various points in the night
+            to perform their skill before going back to sleep to wait dawn. Any villager without a special ability will
+            remain asleep.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: The Final Countdown</h3>
+        <p>
+            There will be a timer counting down, starting from the moment dawn breaks and everyone in the village
+            awaits. The village will convene and discuss who may be the cursed beasts to be put to death, or who may be
+            lying to save their own fur. Any villager with a special ability may or may not share what they are and what
+            they have done or learned. But be warned...not everyone is to be trusted at their word. When the timer is up
+            is it time to vote, no time to waste...time to execute a werewolf.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: The Vote</h3>
+        <p>
+            Each player will be given 1 single vote, make it count. During the time of voting, there is NO TALKING or
+            debating allowed. Whomever of the village receives the most votes is automatically assumed to be the beast
+            and thus swiftly executed without further trial.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: The Villagers Win If...</h3>
+        <p>
+            The innocent Villagers win when at least one of the werewolves is executed OR if there are no werewolves and
+            no one dies.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: The Tanner Wins If...</h3>
+        <p>
+            The Tanner can only win one way, if they manage to convince the other players to execute them. If the Tanner
+            is execute, neither the Villagers nor the Werewolves win. Victory belongs only to the Tanner.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Rule: The Werewolves Win If...</h3>
+        <p>
+            The Werewolves win when all the werewolves survive, and the Tanner does not die.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Villager: The Drunk</h3>
+        <p>
+            The Drunk is a villager that wakes during the night once. The poor dear drank their troubles away before
+            night had fallen and is so sauced that when they wake, they exhcange their card with 1 of the 3 cards in the
+            center, but forgets to remember their new identity. The Drunk will never know that card, thus what identity,
+            they now have. This will remain a mystery until the village has voted and someone is executed.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Villager: The Seer</h3>
+        <p>
+            The Seer is a villager with special abilities - they wake during the night once. When the Seer wakes up,
+            they can either look at a player's card, or 2 of the 3 cards in the center. The Seer may then use that
+            knowledge come dawn to convince or dessuade others to vote for a particular villager.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Villager: The Troublemaker</h3>
+        <p>
+            The Troublemaker is a villager with special abilities - they wake during the night once. When the
+            Troublemaker wakes they may switch 2 other player's cards, thus swapping said player's identities. The
+            Troublemaker, however, has no idea what either card was and cannot swap their own card with another player -
+            which is the role of the Robber.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">Villager: The Robber</h3>
+        <p>
+            Similar to the Troublemaker but not the same, the Robber is a villager with special abilities - they wake
+            during the night once. When the Robber wakes, they may trade their card with another player. Also unlike the
+            Troublemaker, the Robber can view their new card once they receive it.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">NOTICE:</h3>
+        <p>
+            Know that during the night, anything could have happened. The Seer may have seen your card, The Werewolves
+            know who each other are, the Drunk may have been in play and changed their card from one of the cards in the
+            middle, the Troublemaker could have swapped your card with another player, or the Robber could have robbed
+            you, taking your card and taking your old identity, making you now the Robber.
+        </p>
+    </div>
+    <div class="rule">
+        <h3 class="rule-heading">NOTICE: Regular Old Villagers</h3>
+        <p>
+            Sorry, buddy, but you have no special skills. When night falls, you sleep the full night and know NOTHING of
+            what occured during the night.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
