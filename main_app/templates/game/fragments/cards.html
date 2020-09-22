@@ -20,10 +20,10 @@
 <ul id="player">
     <li class="card">
         <div class="card__flipper">
-            <div style="background-image: url({{ playerhand.card.imgurl }})" class="card__front">
+            <div class="card__front">
                 <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
                 <p><span>playerhand..card is {{ playerhand.card }}</span></p>
-                <!-- <img src="{{ playerhand.card.imgurl }}" alt="" height="231px"> -->
+                <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
             <div class="card__back">
             </div>
@@ -270,18 +270,8 @@
 </script>
 
 {% elif game.stage == '99' %}
-<ul class="card-list">
-    {% for hand in hands %}
-    <li class="card">
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-                <img src="{{ hand.card.imgurl }}" alt="" height="231px">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
+
+{% include "game/fragments/endgame.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
 
 
 {% else %}

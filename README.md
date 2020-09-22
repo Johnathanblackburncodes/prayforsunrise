@@ -1,6 +1,11 @@
 # Pray For Sunrise
 
-Pray for Sunrise is an online interactive gaming lobby where users can join a "game room", play Pray for Sunrise with others, and communicate via chat. The user can join a game with frine 
+Pray for Sunrise is an online interactive gaming lobby where users can join a "game room", play Pray for Sunrise with others, and communicate via chat. The user can join a game with friends online and play as many rounds as desired. This was developed by General Assembly Remote Software Engineer Immersive students (below) known as 'Team Werewolf." This game is based off of Bezier Games' "One Night Ultimate Werewolf", implementing the game logic in Django.
+
+Special Thanks: 
+EatVillagers, Daniel Scott, Connnie Lancaster and David Schawel.
+
+Check out the functioning app [here](http://prayforsunrise.herokuapp.com/)!
 
 
 ## Developers 
@@ -76,6 +81,7 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 ![Screenshot of Artwork ](https://imgur.com/JeZ7QPd.jpg)
 ![Screenshot of Artwork ](https://imgur.com/xKmRGpM.jpg)
 ![Screenshot of Artwork ](https://imgur.com/oxgFdpU.jpg)
+![Screenshot of Artwork ](https://imgur.com/oDk9jZt.jpg)
 
 ![Screenshot of Artwork ](https://imgur.com/AfrtZgK.jpg)
 ![Screenshot of Artwork ](https://imgur.com/K57Djj0.jpg)
@@ -88,6 +94,7 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 - Interactive Design 
 - Migrations 
 - Models and Data Mining
+- Chat Room
 
 
 ## Future Improvements
@@ -95,3 +102,5 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 - Profile Pictures
 - Comments on Profiles
 - High Score Board
+- Favicon
+- Improved Links

@@ -1,12 +1,29 @@
-<li class="card">
-  <div class="card__flipper">
-    <div class="card__front">
-      <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-      <p><span>hand.card is {{ hand.card }}</span></p>
-      <img src="{{ hand.card.imgurl }}" alt="" height="231px">
+<ul class="card-list">
+  {% for hand in hands %}
+  <li class="card">
+    <div class="card__flipper">
+      <div class="card__front">
+        <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
+        <p class="card__name"><span class="player-card-name">was a {{ hand.card }}</span></p>
+        <img src="{{ hand.card.imgurl }}" alt="" height="231px">
+      </div>
     </div>
-    <div class="card__back">
+  </li>
+  {% endfor %}
+</ul>
 
+<!-- <ul class="card-list">
+  {% for hand in hands %}
+  <li class="flip-card2">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
+      </div>
+      <div style="background-image: url({{ hand.card.imgurl }})" class="flip-card-back">
+        <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
+        <p class="card__name"><span class="player-card-name">{{ hand.card }}</span></p>
+      </div>
     </div>
-  </div>
-</li>
+  </li>
+  {% endfor %}
+</ul> -->
