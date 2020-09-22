@@ -203,7 +203,10 @@ def hand_reveal(request, hand_id):
     print(f'{request.user} revealed {hand.user} is a {hand.card}')
     # Return the card revealed by the seer here. 
     response = f'<li class="card" ic-get-from="/hand/{hand_id}"> <img src={hand.card.imgurl}> </li>'
-    return HttpResponse(response)
+    return render(request, "game/fragments/revealcard.html", {
+        "hand":hand,
+        "request":request
+    })
 
 
 @database_sync_to_async
@@ -243,6 +246,11 @@ def hand_rob(request):
 def hand_troublemaker(request):
     card_list = request.POST.getlist('card')
 
+    return render(request, "game/fragments/revealcard.html", {
+        "hand":player_hand,
+        "request":request
+    })
+
 
 @database_sync_to_async
 def hand_vote(request, room_name):
@@ -271,8 +279,6 @@ def hand_vote(request, room_name):
 @database_sync_to_async
 def hand_voted(request, room_name, voted_id):
     print(request.user)
-
-    
     try:
         game = Game.objects.get(room=room_name)
         playerhand = Hand.objects.get(game=game, user=request.user)
