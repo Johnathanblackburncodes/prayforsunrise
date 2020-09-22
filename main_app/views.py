@@ -66,6 +66,7 @@ def room(request, room_name):
         'room_name': room_name,
         'game': game,
         'hands': hands,
+        "loser": "loser",
         "playerhand": playerhand
     })
 
@@ -164,16 +165,24 @@ def push_next_stage(request, room_name):
 def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
     hands = Hand.objects.filter(game=game)
+    loser = ''
     try:
         playerhand = Hand.objects.get(game=game, user=request.user)
     except:
         playerhand = {}
+    game_vote = cache.get(room_name)
+    print(f'the game_vote is {game_vote}')
+    tally = collections.Counter(game_vote)
+    print(f'the tally is {tally}')
+    loser = max(tally, key=tally.get)
+    print(f'the loser is {loser}')
 
     return render(request, "game/fragments/board.html", {
         "room_name":room_name,
         "hands":hands,
         "game":game,
         "playerhand":playerhand,
+        "loser": loser,
         "request":request
         })
 
@@ -193,6 +202,7 @@ def generate_actions(request, room_name):
         "hands":hands,
         "game":game,
         "playerhand":playerhand,
+        "loser": "loser",
         "request":request
         })
 
@@ -273,6 +283,7 @@ def hand_vote(request, room_name):
         "hands":hands,
         "game":game,
         "playerhand":playerhand,
+        "loser": "loser",
         "request":request
         })
 
@@ -292,11 +303,25 @@ def hand_voted(request, room_name, voted_id):
     game_vote.append(voted_id)
     cache.set(room_name, game_vote)
     print(f'voted handid: {cache.get(room_name)}')
+
+    game_vote = cache.get(room_name)
+    print(f'the game_vote is {game_vote}')
+    tally = collections.Counter(game_vote)
+    print(f'the tally is {tally}')
+    loser = max(tally, key=tally.get)
+    print(f'the loser is {loser}')
+    try:
+        loser = Hand.objects.filter(id=loser)
+    except:
+        
+        print("something went wrong")
+
     return render(request, "game/fragments/board.html", {
         "room_name":room_name,
         "hands":hands,
         "game":game,
         "playerhand":playerhand,
+        "loser": loser,
         "request":request
         })
 
