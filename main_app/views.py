@@ -35,6 +35,12 @@ def game_clear_hands(game):
 def home(request):
     return render(request, 'home.html')
 
+def about(request):
+    return render(request, 'about.html')
+
+def rules(request):
+    return render(request, 'rules.html')
+
 def room(request, room_name):
     try:
         game = Game.objects.get(room=room_name)
