@@ -101,7 +101,7 @@ def add_game(request):
         new_game.host_id = request.user.id
         new_game.stage = STAGES[0][0]
         new_game.save()
-        cache.add(new_game.room)
+        cache.add(new_game.room, ['00'])
         new_room = '/rooms/' + new_game.room
     except:
         print('An Error has occured generating your room')
@@ -146,11 +146,11 @@ def push_next_stage(request, room_name):
         print(f'{index_of_stage}: index of current stage. {V_STAGES[-1]} is V_stages final item should be the 99')
         next_stage = STAGES[0][0]
         game_clear_hands(game)
-    elif V_STAGES[index_of_stage] == V_STAGES[8]:
-        game_vote = cache.get(room_name)
-        tally = collections.Counter(game_vote)
-        loser = max(tally, key=game_vote.get)
-        print(f'the loser is {loser}')
+    # elif V_STAGES[index_of_stage] == V_STAGES[8]:
+    #     game_vote = cache.get(room_name)
+    #     tally = collections.Counter(game_vote)
+    #     loser = max(tally, key=game_vote.get)
+    #     print(f'the loser is {loser}')
 
     else:
         next_stage = STAGES[index_of_stage+1][0]
