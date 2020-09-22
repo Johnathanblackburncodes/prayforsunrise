@@ -66,7 +66,6 @@
   background-position: center;
 }
 
-
 /* new card  */
 
 .card-list {
@@ -134,4 +133,10 @@
   font-size: 22px;
   height: 50px;
   background-color: #DFDFDF;
+}
+
+.player-card-name {
+  font-family: 'metal mania';
+  font-size: 30px;
+  mix-blend-mode: exclusion;
 }

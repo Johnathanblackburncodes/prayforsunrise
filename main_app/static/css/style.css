@@ -321,6 +321,21 @@ textarea {
   text-align: center;
 }
 
+.rules {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .game {
   display: flex;
   max-width: 1440px;

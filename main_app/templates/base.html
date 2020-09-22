@@ -23,6 +23,8 @@
       <div class="container">
         <a class="logo" href="/">Pray for Sunrise</a>
         <ul class="right-nav">
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'rules' %}">Rules</a></li>
           {% if user.is_authenticated %}
 
           <li><a href="{% url 'logout' %}">Log Out</a></li>

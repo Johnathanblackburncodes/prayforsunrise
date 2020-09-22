@@ -38,6 +38,12 @@ def game_clear_hands(game):
 def home(request):
     return render(request, 'home.html')
 
+def about(request):
+    return render(request, 'about.html')
+
+def rules(request):
+    return render(request, 'rules.html')
+
 @database_sync_to_async
 def room(request, room_name):
     try:
