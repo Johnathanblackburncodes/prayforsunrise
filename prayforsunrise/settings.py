@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'prayforsunrise.wsgi.application'
 #Redis
 CHANNEL_LAYERS = {
     'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-        # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        # 'CONFIG': {
-        #     "hosts": [config("REDIS_HOST")],
-        # },
+        # "BACKEND": "channels.layers.InMemoryChannelLayer"
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [config("REDIS_HOST")],
+        },
     },
 }
 ASGI_APPLICATION = 'prayforsunrise.routing.application'
