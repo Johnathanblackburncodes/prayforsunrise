@@ -32,6 +32,7 @@ def game_clear_hands(game):
     try:
         success = Hand.objects.filter(game=game).delete()
     except:
+        print(f'did we trigger? No')
         return(False)
     print(f'did we trigger? {success}')
     return(success)
