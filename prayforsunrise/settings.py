@@ -76,17 +76,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'prayforsunrise.wsgi.application'
 
 #Channels
-ASGI_APPLICATION = 'prayforsunrise.routing.application'
 
 #Redis
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [config("REDIS_HOST")],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+        # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        # 'CONFIG': {
+        #     "hosts": [config("REDIS_HOST")],
+        # },
     },
 }
+ASGI_APPLICATION = 'prayforsunrise.routing.application'
+ASGI_THREADS = '5'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -98,7 +100,14 @@ DATABASES = {
     }
 }
 
+DATABASES['default']['CONN_MAX_AGE'] = 20
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

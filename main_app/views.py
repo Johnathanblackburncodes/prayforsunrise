@@ -4,12 +4,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django_eventstream import send_event
+from channels.db import database_sync_to_async
 
 import uuid, random
-import boto3 
+import boto3
+import collections
 
 
 from .forms import GameForm, SetupGameForm
@@ -22,7 +25,9 @@ BUCKET = 'prayforsunrise'
 
 V_STAGES = [t[0] for t in STAGES if t[0]]
 
+
 #This should exist elsewhere
+@database_sync_to_async
 def game_clear_hands(game):
     try:
         success = Hand.objects.filter(game=game).delete()
@@ -41,11 +46,13 @@ def about(request):
 def rules(request):
     return render(request, 'rules.html')
 
+@database_sync_to_async
 def room(request, room_name):
     try:
         game = Game.objects.get(room=room_name)
         room_user = User.objects.get(pk=request.user.id)
         game.user.add(room_user)
+        cache.add(room_name, ['00'])
     except:
         print(game)
         return redirect('/')
@@ -83,6 +90,7 @@ def profile(request, user_id):
 
 ### GAME FUNCTIONS
 
+@database_sync_to_async
 def add_game(request):
   form = GameForm(request.POST)
   new_room = ''
@@ -93,6 +101,7 @@ def add_game(request):
         new_game.host_id = request.user.id
         new_game.stage = STAGES[0][0]
         new_game.save()
+        cache.add(new_game.room, ['00'])
         new_room = '/rooms/' + new_game.room
     except:
         print('An Error has occured generating your room')
@@ -101,6 +110,7 @@ def add_game(request):
       print(f'{form}')
   return redirect(new_room)
 
+@database_sync_to_async
 def setup_game( request ):
     form = SetupGameForm(request.POST)
     if form.is_valid():
@@ -125,6 +135,8 @@ def setup_game( request ):
     #FIX: using a static room for SSE while we finish the game
     return redirect('rooms/' + update_game.room)
 
+
+@database_sync_to_async
 def push_next_stage(request, room_name):
     game = Game.objects.get(room=room_name)
     index_of_stage = V_STAGES.index(game.stage)
@@ -134,6 +146,12 @@ def push_next_stage(request, room_name):
         print(f'{index_of_stage}: index of current stage. {V_STAGES[-1]} is V_stages final item should be the 99')
         next_stage = STAGES[0][0]
         game_clear_hands(game)
+    # elif V_STAGES[index_of_stage] == V_STAGES[8]:
+    #     game_vote = cache.get(room_name)
+    #     tally = collections.Counter(game_vote)
+    #     loser = max(tally, key=game_vote.get)
+    #     print(f'the loser is {loser}')
+
     else:
         next_stage = STAGES[index_of_stage+1][0]
     game.stage = next_stage
@@ -141,6 +159,8 @@ def push_next_stage(request, room_name):
     send_event('gameroom', (game.room+'-updated'), {'text': 'board-updated'})
     return HttpResponse("Next Stage")
 
+
+@database_sync_to_async
 def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
     hands = Hand.objects.filter(game=game)
@@ -157,6 +177,8 @@ def generate_board(request, room_name):
         "request":request
         })
 
+
+@database_sync_to_async
 def generate_actions(request, room_name):
     game = Game.objects.get(room=room_name)
     print(f'This is our Game{game}, this is our room_name{room_name}')
@@ -174,13 +196,20 @@ def generate_actions(request, room_name):
         "request":request
         })
 
+
+@database_sync_to_async
 def hand_reveal(request, hand_id):
     hand = Hand.objects.get(id=hand_id)
     print(f'{request.user} revealed {hand.user} is a {hand.card}')
     # Return the card revealed by the seer here. 
     response = f'<li class="card" ic-get-from="/hand/{hand_id}"> <img src={hand.card.imgurl}> </li>'
-    return HttpResponse(response)
+    return render(request, "game/fragments/revealcard.html", {
+        "hand":hand,
+        "request":request
+    })
 
+
+@database_sync_to_async
 def hand_rob(request):
     print(request.user)
     try:
@@ -212,9 +241,18 @@ def hand_rob(request):
         "request":request
     })
 
+
+@database_sync_to_async
 def hand_troublemaker(request):
     card_list = request.POST.getlist('card')
 
+    return render(request, "game/fragments/revealcard.html", {
+        "hand":player_hand,
+        "request":request
+    })
+
+
+@database_sync_to_async
 def hand_vote(request, room_name):
     print(request.user)
     try:
@@ -230,6 +268,30 @@ def hand_vote(request, room_name):
     except:
         playerhand = {}
 
+    return render(request, "game/fragments/board.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
+
+@database_sync_to_async
+def hand_voted(request, room_name, voted_id):
+    print(request.user)
+    try:
+        game = Game.objects.get(room=room_name)
+        playerhand = Hand.objects.get(game=game, user=request.user)
+        hands = Hand.objects.filter(game=game)
+
+    except:
+        print("something went wrong")
+        playerhand = {}
+    game_vote = cache.get(room_name)
+    print(game_vote)
+    game_vote.append(voted_id)
+    cache.set(room_name, game_vote)
+    print(f'voted handid: {cache.get(room_name)}')
     return render(request, "game/fragments/board.html", {
         "room_name":room_name,
         "hands":hands,

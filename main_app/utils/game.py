@@ -3,6 +3,8 @@ from .models import Profile, Game, Card, Hand, STAGES, STATUS, ROLES
 G_STAGES = [t[0] for t in STAGES if t[0]]
 G_ROLES = [r[0] for r in STAGES if r[0]]
 
+
+
 def game_next_stage(game):
     players = game.user.all()
 
@@ -20,3 +22,4 @@ def game_clear_hands(game):
     except:
         return(False)
     return(success)
+

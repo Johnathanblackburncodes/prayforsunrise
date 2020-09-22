@@ -154,7 +154,7 @@
     });
 </script>
 {% elif playerhand.card.role == 'M' and game.stage == '7' %}
-<ul class="card-list">
+<ul class="card-list" id="troublemakerList">
     {% for hand in hands %}
     {% if hand.user != user %}
     <li class="card">
@@ -171,7 +171,7 @@
     {% endif %}
     {% endfor %}
 </ul>
-<ul id="player">
+<ul id="player" >
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
@@ -214,15 +214,15 @@
 <form id="vote" class="remove-after">
     <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
 
-
-    <ul class="card-list" id="voteList" ic-include="#robber" ic-post-to="/hand/{{ room_name }}/vote/"
-        ic-trigger-on="end" ic-target=".cardboard">
+    
+    <ul class="card-list" id="voteList" ic-include="#robber" ic-post-to="/hand/{{ room_name }}/vote/" ic-trigger-on="end" ic-target=".cardboard">
         {% for hand in hands %}
         {% if hand.user == user %}
         <li class="card filtered">
+        <input type="hidden" name="card" value="{{hand.id}}">
             {% else %}
-            <input type="hidden" name="card" value="{{hand.id}}">
-        <li class="card">
+        <input type="hidden" name="card" value="{{hand.id}}">
+        <li class="card" ic-post-to="/hand/{{ room_name }}/voted/{{hand.id}}" ic-target=".cardboard">
             {% endif %}
             <div class="card__flipper">
                 <div class="card__front">
@@ -248,21 +248,22 @@
 <script>
     Sortable.create(voteList, {
         group: {
-            name: 'shared',
+            name: "shared",
+            pull: 'clone',
             put: false,
         },
-        swap: true,
+        //swap: true,
         sort: false,
-        swapClass: 'highlight',
         filter: '.filtered',
         animation: 150
     });
 
     Sortable.create(victimList, {
-        group: 'shared',
-        swap: true,
-        sort: false,
-        swapClass: 'highlight',
+        group: {
+            name: "shared",
+            put: true,
+        },
+
         filter: '.filtered',
         animation: 150
     });
