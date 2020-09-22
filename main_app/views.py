@@ -4,13 +4,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django_eventstream import send_event
 from channels.db import database_sync_to_async
 
 import uuid, random
-import boto3 
+import boto3
+import collections
 
 
 from .forms import GameForm, SetupGameForm
@@ -50,6 +52,7 @@ def room(request, room_name):
         game = Game.objects.get(room=room_name)
         room_user = User.objects.get(pk=request.user.id)
         game.user.add(room_user)
+        cache.add(room_name, ['00'])
     except:
         print(game)
         return redirect('/')
@@ -98,6 +101,7 @@ def add_game(request):
         new_game.host_id = request.user.id
         new_game.stage = STAGES[0][0]
         new_game.save()
+        cache.add(new_game.room)
         new_room = '/rooms/' + new_game.room
     except:
         print('An Error has occured generating your room')
@@ -142,6 +146,12 @@ def push_next_stage(request, room_name):
         print(f'{index_of_stage}: index of current stage. {V_STAGES[-1]} is V_stages final item should be the 99')
         next_stage = STAGES[0][0]
         game_clear_hands(game)
+    elif V_STAGES[index_of_stage] == V_STAGES[8]:
+        game_vote = cache.get(room_name)
+        tally = collections.Counter(game_vote)
+        loser = max(tally, key=game_vote.get)
+        print(f'the loser is {loser}')
+
     else:
         next_stage = STAGES[index_of_stage+1][0]
     game.stage = next_stage
@@ -264,20 +274,22 @@ def hand_voted(request, room_name, voted_id):
 
     
     try:
+        game = Game.objects.get(room=room_name)
         playerhand = Hand.objects.get(game=game, user=request.user)
-   #     game = Game.objects.get(room=room_name)
-    #    hands = Hand.objects.filter(game=game)
+        hands = Hand.objects.filter(game=game)
 
     except:
         print("something went wrong")
         playerhand = {}
-
-    game_vote[room_name]= [voted_id]
-    print(f'voted handid: {game_vote}')
+    game_vote = cache.get(room_name)
+    print(game_vote)
+    game_vote.append(voted_id)
+    cache.set(room_name, game_vote)
+    print(f'voted handid: {cache.get(room_name)}')
     return render(request, "game/fragments/board.html", {
         "room_name":room_name,
-   #     "hands":hands,
-  #      "game":game,
+        "hands":hands,
+        "game":game,
         "playerhand":playerhand,
         "request":request
         })
