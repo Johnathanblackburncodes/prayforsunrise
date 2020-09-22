@@ -13,3 +13,10 @@ def game_next_stage(game):
             if ROLES[G_ROLES.index(player.hand.role)][1] = STAGES[G_STAGES.index(stage)][1]
             return stage
     #now return our next useful Stage
+
+def game_clear_hands(game):
+    try:
+        success = objects.filter(game=game).delete()
+    except:
+        return(False)
+    return(success)

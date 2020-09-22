@@ -1,11 +1,11 @@
 <!-- For now we're just using a static SSE endpoint to keep things moving. replace /game/gameroom when channels is resolved-->
 
 
-<div class="board" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:{{ room_name }}-updated">
+<div class="board cardboard" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:{{ room_name }}-updated">
     <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}} is a {{ playerhand.card }}
     </h2>
 
-    
+
 
     <!-- Put our Card Grid here -->
     {% include "game/fragments/cards.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}

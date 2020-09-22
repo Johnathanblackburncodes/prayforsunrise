@@ -1,32 +1,4 @@
 /* Cards  */
-.card-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 15px;
-  text-align: center;
-  overflow-x: hidden;
-}
-
-.card:nth-child(3) {
-  margin-right: 0;
-}
-
-.card:last-child {
-  margin-right: 0;
-}
-
-.card {
-  float: left;
-  position: relative;
-  width: calc(100% * .3333 - 30px + .3333 * 30px);
-  height: 231px;
-  margin: 0 15px 15px 0;
-  perspective: 1000px;
-}
 
 .card__front {
   background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/v1600280180/moonlight%20cards/75418836_2778768478822220_8034227817455550464_n_uzza0f.png);
@@ -88,22 +60,21 @@
   height: 231px;
   margin: 0 15px 15px 0;
   perspective: 1000;
-  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/b_rgb:ffffff/v1600645462/moonlight%20cards/behead-2027518_640_zcpa0l.jpg);
+  background-image: url(https://res.cloudinary.com/dfm6aykqi/image/upload/v1600726836/moonlight%20cards/kindpng_2075081_i7ema2.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-
 /* new card  */
 
-.card-list2 {
+.card-list {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
-.flip-card {
+.card {
   background-color: transparent;
   width: calc((100% / 3) - 12px);
   height: 403px;
@@ -162,4 +133,10 @@
   font-size: 22px;
   height: 50px;
   background-color: #DFDFDF;
+}
+
+.player-card-name {
+  font-family: 'metal mania';
+  font-size: 30px;
+  mix-blend-mode: exclusion;
 }

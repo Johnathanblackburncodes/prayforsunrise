@@ -2,18 +2,16 @@
     <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
 </form>
 {% if game.stage == '2'%}
-<ul id="card-list">
+<ul class="card-list">
     {% for hand in hands %}
     {% if hand.user != user %}
     <li class="card">
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
-            </div>
-            <div class="card__back">
-            </div>
+        <div class="card__front">
+            <p class="card__name"><span>{{ hand.user }}</span></p>
+            <p><span>hand.card is {{ hand.card }}</span></p>
+            <p><span>user.hand.card is {{ hand.card }}</span></p>
+        </div>
+        <div class="card__back">
         </div>
     </li>
     {% endif %}
@@ -22,10 +20,10 @@
 <ul id="player">
     <li class="card">
         <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+            <div style="background-image: url({{ playerhand.card.imgurl }})" class="card__front">
+                <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
                 <p><span>playerhand..card is {{ playerhand.card }}</span></p>
-                <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
+                <!-- <img src="{{ playerhand.card.imgurl }}" alt="" height="231px"> -->
             </div>
             <div class="card__back">
             </div>
@@ -43,7 +41,7 @@
                 {% if hand.card.role == 'W' %}
                 <img src="{{ hand.card.imgurl }}" alt="" height="231px">
                 {% endif %}
-                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
                 <p><span>hand.card.role is {{ hand.card.role }}</span></p>
                 <p><span>user.hand.card is {{ hand.card }}</span></p>
             </div>
@@ -60,7 +58,7 @@
     <li class="card" ic-get-from="/hand/{{ hand.id }}"></li>
     <div class="card__flipper">
         <div class="card__front">
-            <p class="card__name"><span>{{ hand.user }}</span></p>
+            <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
             <p><span>hand.card is {{ hand.card }}</span></p>
             <p><span>user.hand.card is {{ hand.card }}</span></p>
         </div>
@@ -75,7 +73,7 @@
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
-                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                <p class="card__name"><span player-card-name>{{ playerhand.user }}</span></p>
                 <p><span>playerhand..card is {{ playerhand.card }}</span></p>
                 <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
@@ -105,7 +103,7 @@
             <input type="hidden" name="card" value="{{hand.id}}">
             <div class="card__flipper">
                 <div class="card__front">
-                    <p class="card__name"><span>{{ hand.user }}</span></p>
+                    <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
                     <p><span>hand.card is {{ hand.card }}</span></p>
                     <p><span>user.hand.card is {{ hand.card }}</span></p>
                 </div>
@@ -122,7 +120,7 @@
             <input type="hidden" name="card" value="{{playerhand.id}}">
             <div class="card__flipper">
                 <div class="card__front">
-                    <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                    <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
                     <p><span>playerhand.card is {{ playerhand.card }}</span></p>
                     <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
                 </div>
@@ -162,7 +160,7 @@
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
                 <p><span>hand.card is {{ hand.card }}</span></p>
                 <p><span>user.hand.card is {{ hand.card }}</span></p>
             </div>
@@ -177,7 +175,7 @@
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
-                <p class="card__name"><span>{{ playerhand.user }}</span></p>
+                <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
                 <p><span>playerhand..card is {{ playerhand.card }}</span></p>
                 <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
@@ -202,7 +200,7 @@
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
                 <p><span>hand.card is {{ hand.card }}</span></p>
                 <p><span>user.hand.card is {{ hand.card }}</span></p>
             </div>
@@ -213,88 +211,77 @@
     {% endfor %}
 </ul>
 {% elif game.stage == '9' %}
-<ul class="card-list">
-    {% for hand in hands %}
-    <li class="card">
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
+<form id="vote" class="remove-after">
+    <input name="csrfmiddlewaretoken" type="hidden" value="{{ csrf_token }}">
+
+
+    <ul class="card-list" id="voteList" ic-include="#robber" ic-post-to="/hand/{{ room_name }}/vote/"
+        ic-trigger-on="end" ic-target=".cardboard">
+        {% for hand in hands %}
+        {% if hand.user == user %}
+        <li class="card filtered">
+            {% else %}
+            <input type="hidden" name="card" value="{{hand.id}}">
+        <li class="card">
+            {% endif %}
+            <div class="card__flipper">
+                <div class="card__front">
+                    <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
+                    <p><span>hand.card is {{ hand.card }}</span></p>
+                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+                </div>
+                <div class="card__back">
+                </div>
             </div>
-            <div class="card__back">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-<script>
-    Sortable.create(drunkList, {
-        swap: true,
-        swapClass: 'highlight',
-        filter: '.filtered',
-        animation: 150
-    });
-</script>
-{% elif game.stage == '9' %}
-<ul class="card-list" id="voteList">
-    {% for hand in hands %}
-    {% if hand.user == user %}
-    <li class="card filtered">
-        {% else %}
-    <li class="card">
-        {% endif %}
-        <div class="card__flipper">
-            <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
-            </div>
-            <div class="card__back">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-<ul class="card-list" id="victimList">
-    {% for hand in hands %}
-    <li class="execute-card">
-        <div class="card__flipper">
+        </li>
+        {% endfor %}
+    </ul>
+    <ul class="card-list" id="victimList">
+        <li class="execute-card">
+            <input type="hidden" name="card" value="000">
             <div class="card__front">
                 <p class="card__name"><span>Execute</span></p>
             </div>
-            <div class="card__back">
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-
-</ul>
+        </li>
+    </ul>
+</form>
 <script>
     Sortable.create(voteList, {
         group: {
             name: 'shared',
-            put: false
+            put: false,
         },
-        sort: false,
         swap: true,
+        sort: false,
         swapClass: 'highlight',
         filter: '.filtered',
         animation: 150
     });
 
     Sortable.create(victimList, {
-        group: {
-            name: 'shared',
-            put: true
-        },
-        sort: false,
+        group: 'shared',
         swap: true,
+        sort: false,
         swapClass: 'highlight',
         filter: '.filtered',
         animation: 150
     });
 </script>
+
+{% elif game.stage == '99' %}
+<ul class="card-list">
+    {% for hand in hands %}
+    <li class="card">
+        <div class="card__flipper">
+            <div class="card__front">
+                <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
+                <img src="{{ hand.card.imgurl }}" alt="" height="231px">
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
 
 {% else %}
 <ul class="card-list">
@@ -302,7 +289,7 @@
     <li class="card">
         <div class="card__flipper">
             <div class="card__front">
-                <p class="card__name"><span>{{ hand.user }}</span></p>
+                <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
                 <p><img src="{{ hand.carg.imgurl }}" alt=""></p>
             </div>
             <div class="card__back">

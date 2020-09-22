@@ -22,6 +22,14 @@ BUCKET = 'prayforsunrise'
 
 V_STAGES = [t[0] for t in STAGES if t[0]]
 
+#This should exist elsewhere
+def game_clear_hands(game):
+    try:
+        success = Hand.objects.filter(game=game).delete()
+    except:
+        return(False)
+    print(f'did we trigger? {success}')
+    return(success)
 
 
 def home(request):
@@ -120,9 +128,12 @@ def setup_game( request ):
 def push_next_stage(request, room_name):
     game = Game.objects.get(room=room_name)
     index_of_stage = V_STAGES.index(game.stage)
+    
     #make sure we don't push past the last index
-    if index_of_stage == V_STAGES[-1]:
+    if V_STAGES[index_of_stage] == V_STAGES[-1]:
+        print(f'{index_of_stage}: index of current stage. {V_STAGES[-1]} is V_stages final item should be the 99')
         next_stage = STAGES[0][0]
+        game_clear_hands(game)
     else:
         next_stage = STAGES[index_of_stage+1][0]
     game.stage = next_stage
@@ -132,13 +143,11 @@ def push_next_stage(request, room_name):
 
 def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
-    print(f'This is our Game{game}, this is our room_name{room_name}')
     hands = Hand.objects.filter(game=game)
     try:
         playerhand = Hand.objects.get(game=game, user=request.user)
     except:
         playerhand = {}
-    print(f'playerhand is {playerhand.card}')
 
     return render(request, "game/fragments/board.html", {
         "room_name":room_name,
@@ -156,7 +165,6 @@ def generate_actions(request, room_name):
         playerhand = Hand.objects.get(game=game, user=request.user)
     except:
         playerhand = {}
-    print(f'playerhand is {playerhand.card}')
 
     return render(request, "game/fragments/actions.html", {
         "room_name":room_name,
@@ -184,7 +192,7 @@ def hand_rob(request):
         victim_hand = Hand.objects.get(id=card)
         player_hand = Hand.objects.get(user=request.user)
     except: 
-        print('Robber went wrong')
+        print('Robbery gone wrong')
     swaplist = [victim_hand.card.id, player_hand.card.id]
     print(swaplist)
     try:
@@ -207,6 +215,28 @@ def hand_rob(request):
 def hand_troublemaker(request):
     card_list = request.POST.getlist('card')
 
+def hand_vote(request, room_name):
+    print(request.user)
+    try:
+        card = request.POST.get('card','')
+        card_list = request.POST.getlist('card')
+    except:
+        pass
+    print(card_list)
+    game = Game.objects.get(room=room_name)
+    hands = Hand.objects.filter(game=game)
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+    except:
+        playerhand = {}
+
+    return render(request, "game/fragments/board.html", {
+        "room_name":room_name,
+        "hands":hands,
+        "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
 
 ### OTHER PAGES    
 
