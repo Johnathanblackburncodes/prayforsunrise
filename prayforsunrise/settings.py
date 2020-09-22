@@ -84,7 +84,7 @@ CHANNEL_LAYERS = {
         # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
         # 'CONFIG': {
         #     "hosts": [config("REDIS_HOST")],
-        },
+        # },
     },
 }
 ASGI_APPLICATION = 'prayforsunrise.routing.application'

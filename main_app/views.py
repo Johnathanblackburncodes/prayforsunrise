@@ -23,6 +23,7 @@ BUCKET = 'prayforsunrise'
 
 V_STAGES = [t[0] for t in STAGES if t[0]]
 
+
 #This should exist elsewhere
 @database_sync_to_async
 def game_clear_hands(game):
@@ -247,6 +248,30 @@ def hand_vote(request, room_name):
         "room_name":room_name,
         "hands":hands,
         "game":game,
+        "playerhand":playerhand,
+        "request":request
+        })
+
+@database_sync_to_async
+def hand_voted(request, room_name, voted_id):
+    print(request.user)
+
+    
+    try:
+        playerhand = Hand.objects.get(game=game, user=request.user)
+   #     game = Game.objects.get(room=room_name)
+    #    hands = Hand.objects.filter(game=game)
+
+    except:
+        print("something went wrong")
+        playerhand = {}
+
+    game_vote[room_name]= [voted_id]
+    print(f'voted handid: {game_vote}')
+    return render(request, "game/fragments/board.html", {
+        "room_name":room_name,
+   #     "hands":hands,
+  #      "game":game,
         "playerhand":playerhand,
         "request":request
         })
