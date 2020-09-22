@@ -69,12 +69,27 @@ Pray for Sunrise is an online interactive gaming lobby where users can join a "g
 
 ## Screenshots
 
+![Screenshot of Artwork ](https://imgur.com/BuvPk56.jpg)
+![Screenshot of Artwork ](https://imgur.com/0rZBIjd.jpg)
+![Screenshot of Artwork ](https://imgur.com/JeZ7QPd.jpg)
+![Screenshot of Artwork ](https://imgur.com/xKmRGpM.jpg)
+![Screenshot of Artwork ](https://imgur.com/oxgFdpU.jpg)
 
+![Screenshot of Artwork ](https://imgur.com/AfrtZgK.jpg)
+![Screenshot of Artwork ](https://imgur.com/K57Djj0.jpg)
+![Screenshot of Artwork ](https://imgur.com/svBWqke.jpg)
+![Screenshot of Artwork ](https://imgur.com/xPPzSBv.jpg)
+![Screenshot of Artwork ](https://imgur.com/wKLU9Ud.jpg)
 
 ## Biggest Challenges
 - Merging & Debugging
 - Interactive Design 
 - Migrations 
+- Models and Data Mining
 
 
 ## Future Improvements
+- Interactive Chat
+- Profile Pictures
+- Comments on Profiles
+- High Score Board
