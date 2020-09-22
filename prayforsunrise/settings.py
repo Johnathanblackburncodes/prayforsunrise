@@ -76,7 +76,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'prayforsunrise.wsgi.application'
 
 #Channels
-ASGI_APPLICATION = 'prayforsunrise.routing.application'
 
 #Redis
 CHANNEL_LAYERS = {
@@ -87,6 +86,7 @@ CHANNEL_LAYERS = {
         },
     },
 }
+ASGI_APPLICATION = 'prayforsunrise.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -98,6 +98,7 @@ DATABASES = {
     }
 }
 
+DATABASES['default']['CONN_MAX_AGE'] = 20
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
