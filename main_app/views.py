@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django_eventstream import send_event
+from channels.db import database_sync_to_async
 
 import uuid, random
 import boto3 
@@ -23,6 +24,7 @@ BUCKET = 'prayforsunrise'
 V_STAGES = [t[0] for t in STAGES if t[0]]
 
 #This should exist elsewhere
+@database_sync_to_async
 def game_clear_hands(game):
     try:
         success = Hand.objects.filter(game=game).delete()
@@ -35,6 +37,7 @@ def game_clear_hands(game):
 def home(request):
     return render(request, 'home.html')
 
+@database_sync_to_async
 def room(request, room_name):
     try:
         game = Game.objects.get(room=room_name)
@@ -77,6 +80,7 @@ def profile(request, user_id):
 
 ### GAME FUNCTIONS
 
+@database_sync_to_async
 def add_game(request):
   form = GameForm(request.POST)
   new_room = ''
@@ -95,6 +99,7 @@ def add_game(request):
       print(f'{form}')
   return redirect(new_room)
 
+@database_sync_to_async
 def setup_game( request ):
     form = SetupGameForm(request.POST)
     if form.is_valid():
@@ -119,6 +124,8 @@ def setup_game( request ):
     #FIX: using a static room for SSE while we finish the game
     return redirect('rooms/' + update_game.room)
 
+
+@database_sync_to_async
 def push_next_stage(request, room_name):
     game = Game.objects.get(room=room_name)
     index_of_stage = V_STAGES.index(game.stage)
@@ -135,6 +142,8 @@ def push_next_stage(request, room_name):
     send_event('gameroom', (game.room+'-updated'), {'text': 'board-updated'})
     return HttpResponse("Next Stage")
 
+
+@database_sync_to_async
 def generate_board(request, room_name):
     game = Game.objects.get(room=room_name)
     hands = Hand.objects.filter(game=game)
@@ -151,6 +160,8 @@ def generate_board(request, room_name):
         "request":request
         })
 
+
+@database_sync_to_async
 def generate_actions(request, room_name):
     game = Game.objects.get(room=room_name)
     print(f'This is our Game{game}, this is our room_name{room_name}')
@@ -168,6 +179,8 @@ def generate_actions(request, room_name):
         "request":request
         })
 
+
+@database_sync_to_async
 def hand_reveal(request, hand_id):
     hand = Hand.objects.get(id=hand_id)
     print(f'{request.user} revealed {hand.user} is a {hand.card}')
@@ -175,6 +188,8 @@ def hand_reveal(request, hand_id):
     response = f'<li class="card" ic-get-from="/hand/{hand_id}"> <img src={hand.card.imgurl}> </li>'
     return HttpResponse(response)
 
+
+@database_sync_to_async
 def hand_rob(request):
     print(request.user)
     try:
@@ -206,9 +221,13 @@ def hand_rob(request):
         "request":request
     })
 
+
+@database_sync_to_async
 def hand_troublemaker(request):
     card_list = request.POST.getlist('card')
 
+
+@database_sync_to_async
 def hand_vote(request, room_name):
     print(request.user)
     try:
