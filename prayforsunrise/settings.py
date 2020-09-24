@@ -90,6 +90,10 @@ CHANNEL_LAYERS = {
 ASGI_APPLICATION = 'prayforsunrise.routing.application'
 ASGI_THREADS = '5'
 
+#enabling Stream storage in case of connection loss
+EVENTSTREAM_STORAGE_CLASS = 'django_eventstream.storage.DjangoModelStorage'
+
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
