@@ -8,8 +8,7 @@
     <li class="card">
         <div class="card__front">
             <p class="card__name"><span>{{ hand.user }}</span></p>
-            <p><span>hand.card is {{ hand.card }}</span></p>
-            <p><span>user.hand.card is {{ hand.card }}</span></p>
+
         </div>
         <div class="card__back">
         </div>
@@ -22,7 +21,7 @@
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
-                <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+
                 <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
             <div class="card__back">
@@ -42,8 +41,7 @@
                 <img src="{{ hand.card.imgurl }}" alt="" height="231px">
                 {% endif %}
                 <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-                <p><span>hand.card.role is {{ hand.card.role }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
+
             </div>
             <div class="card__back">
             </div>
@@ -59,8 +57,7 @@
     <div class="card__flipper">
         <div class="card__front">
             <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-            <p><span>hand.card is {{ hand.card }}</span></p>
-            <p><span>user.hand.card is {{ hand.card }}</span></p>
+
         </div>
         <div class="card__back">
         </div>
@@ -74,7 +71,7 @@
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span player-card-name>{{ playerhand.user }}</span></p>
-                <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+
                 <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
             <div class="card__back">
@@ -104,8 +101,7 @@
             <div class="card__flipper">
                 <div class="card__front">
                     <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-                    <p><span>hand.card is {{ hand.card }}</span></p>
-                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+ 
                 </div>
                 <div class="card__back">
                 </div>
@@ -121,7 +117,7 @@
             <div class="card__flipper">
                 <div class="card__front">
                     <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
-                    <p><span>playerhand.card is {{ playerhand.card }}</span></p>
+
                     <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
                 </div>
                 <div class="card__back">
@@ -161,8 +157,7 @@
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
+
             </div>
             <div class="card__back">
             </div>
@@ -176,7 +171,7 @@
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span class="player-card-name">{{ playerhand.user }}</span></p>
-                <p><span>playerhand..card is {{ playerhand.card }}</span></p>
+
                 <img src="{{ playerhand.card.imgurl }}" alt="" height="231px">
             </div>
             <div class="card__back">
@@ -201,8 +196,7 @@
         <div class="card__flipper">
             <div class="card__front">
                 <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-                <p><span>hand.card is {{ hand.card }}</span></p>
-                <p><span>user.hand.card is {{ hand.card }}</span></p>
+
             </div>
             <div class="card__back">
             </div>
@@ -227,8 +221,7 @@
             <div class="card__flipper">
                 <div class="card__front">
                     <p class="card__name"><span class="player-card-name">{{ hand.user }}</span></p>
-                    <p><span>hand.card is {{ hand.card }}</span></p>
-                    <p><span>user.hand.card is {{ hand.card }}</span></p>
+
                 </div>
                 <div class="card__back">
                 </div>
@@ -271,7 +264,7 @@
 
 {% elif game.stage == '99' %}
 
-{% include "game/fragments/endgame.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
+{% include "game/fragments/endgame.html" with room_name=room_name game=game hands=hands playerhand=playerhand loser=loser%}
 
 
 {% else %}

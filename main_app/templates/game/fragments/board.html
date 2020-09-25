@@ -2,12 +2,12 @@
 
 
 <div class="board cardboard" ic-get-from="/game/{{ room_name }}/" ic-trigger-on="sse:{{ room_name }}-updated">
-    <h2 color='white'> Game Stage: {{ game.stage }} Host: {{ game.host }} Player: {{ user}} is a {{ playerhand.card }}
+ 
     </h2>
 
 
 
     <!-- Put our Card Grid here -->
-    {% include "game/fragments/cards.html" with room_name=room_name game=game hands=hands playerhand=playerhand%}
+    {% include "game/fragments/cards.html" with room_name=room_name game=game hands=hands playerhand=playerhand loser=loser%}
 
 </div>
